@@ -1,0 +1,24 @@
+import React, {FunctionComponent} from 'react'
+import {CategoryContext} from '@repo/sanity/categories'
+import Link from 'next/link'
+import ThumbnailImage from '../image/ThumbnailImage'
+import {ArticleListItem} from "@repo/sanity/selections";
+
+interface Props {
+  data: ArticleListItem[]
+  context?: CategoryContext
+}
+
+const BibliographyList: FunctionComponent<Props> = async ({context, data}) => {
+  return (
+    <main className={'flex flex-wrap gap-2'}>
+      {data.map((item) => (
+        <Link href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'} key={item._id}>
+          <ThumbnailImage image={item.image} />
+        </Link>
+      ))}
+    </main>
+  )
+}
+
+export default BibliographyList

@@ -1,0 +1,22 @@
+{
+  "name": "@repo/sanity",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./client": "./src/liveClient.ts",
+    "./staticClient": "./src/staticClient.ts",
+    "./categories": "./src/categories.ts",
+    "./queries": "./src/queries.ts",
+    "./selections": "./src/selections.ts",
+    "./i18n": "./src/i18n.ts",
+    "./sites": "./src/sites.ts"
+  },
+  "dependencies": {
+    "groqd": "^0.15.10",
+    "next-sanity": "^9.9.6"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}
