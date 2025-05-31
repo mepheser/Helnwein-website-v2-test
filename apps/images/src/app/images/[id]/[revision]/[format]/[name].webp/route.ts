@@ -16,7 +16,7 @@ enum Format {
 
 export async function GET(
     request: Request,
-    { params }: { params: Promise<{ id: string, format:  Format}> }
+    {params}: { params: Promise<{ id: string, format: Format }> }
 ) {
     const {id, format} = await params
     const meta = await getImageMeta(id)
@@ -49,7 +49,11 @@ export async function GET(
         }
         case Format.PREVIEW: {
             image = builder
-                .image(meta.image)
+                .image({
+                    ...meta.image,
+                    crop: undefined,
+                    hotspot: undefined,
+                })
                 .format('webp')
                 .width(300)
                 .height(335)
@@ -57,7 +61,11 @@ export async function GET(
         }
         case Format.BIOGRAPHY_LIST: {
             image = builder
-                .image(meta.image)
+                .image({
+                    ...meta.image,
+                    crop: undefined,
+                    hotspot: undefined,
+                })
                 .format('webp')
                 .width(150)
                 .height(150)
@@ -70,16 +78,14 @@ export async function GET(
                 .width(140)
             break
         }
-        case Format.RAW: {
-            image = builder
-                .image(meta.image)
-                .format('webp')
-                .maxWidth(3000)
-            break
-        }
         default: {
             image = builder
-                .image(meta.image)
+                .image({
+                    ...meta.image,
+                    crop: undefined,
+                    hotspot: undefined,
+                })
+                .maxWidth(3000)
                 .format('webp')
         }
     }
@@ -87,7 +93,7 @@ export async function GET(
     const response = await fetch(image!.url())
 
     if (!response.ok) {
-        return NextResponse.json({ error: 'Failed to fetch image' }, { status: response.status })
+        return NextResponse.json({error: 'Failed to fetch image'}, {status: response.status})
     }
 
     const headers = new Headers(response.headers)
