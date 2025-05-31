@@ -56,7 +56,7 @@ export async function GET(
                 })
                 .format('webp')
                 .width(300)
-                .height(335)
+                .height(235)
             break
         }
         case Format.BIOGRAPHY_LIST: {
