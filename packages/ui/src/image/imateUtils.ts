@@ -12,7 +12,7 @@ export enum Format {
 }
 
 export const createImageLoader = () => ({src}: {src: string}) =>
-    `https://helnwein-website-images.b-cdn.net/images${src}`
+    `https://images.helnwein.com/images${src}`
 
 export const imageUrl = (image: HelnweinImage, format: Format)=> {
     const name = image.name ? image.name.replaceAll(' ', '_') : image._id
