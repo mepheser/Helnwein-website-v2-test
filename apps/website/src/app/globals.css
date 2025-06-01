@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "../../../../packages/ui/src";
 
 :root {
@@ -10,7 +10,7 @@
   --color-black: #201f24;
   --color-white: #d1cfcd;
   --color-gray: #787f8b;
-  --color-selected: #FFFFFF;
+  --color-selected: #ffffff;
   --color-logo1: #54545f;
   --color-logo2: #4a4a54;
 

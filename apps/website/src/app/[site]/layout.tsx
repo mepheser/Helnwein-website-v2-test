@@ -1,6 +1,5 @@
 import React, {FunctionComponent} from 'react'
 
-
 interface Props {
   children: React.ReactNode
   params: {

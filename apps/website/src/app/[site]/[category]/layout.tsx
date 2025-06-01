@@ -2,7 +2,6 @@ import React, {FunctionComponent} from 'react'
 import {getCategoryContext} from '@repo/sanity/categories'
 import MainMenu from '@repo/ui/menu/MainMenu'
 
-
 interface Props {
   children: React.ReactNode
   params: Promise<{

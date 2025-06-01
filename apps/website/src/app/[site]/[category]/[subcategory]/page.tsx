@@ -7,13 +7,7 @@ import QuoteHelnweinList from '@repo/ui/quote/QuoteHelnweinList'
 import FeedbackList from '@repo/ui/quote/FeedbackList'
 import BiographyList from '@repo/ui/article/BiographyList'
 import BibliographyList from '@repo/ui/article/BibliographyList'
-import {
-  getArticleList,
-  getBibliographyList,
-  getBiographyList,
-  getQuoteHelnweinList,
-  getQuoteList
-} from "@repo/sanity/queries";
+import {getArticleList, getBibliographyList, getBiographyList, getQuoteHelnweinList, getQuoteList} from '@repo/sanity/queries'
 
 const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
   const categoryContext = getCategoryContext(params)

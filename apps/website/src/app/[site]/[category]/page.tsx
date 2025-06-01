@@ -26,7 +26,7 @@ const CategoryPage: FunctionComponent<any> = async ({params}) => {
   return (
     <>
       <Submenu context={categoryContext} />
-      <div className={'fixed bottom-0 left-0 right-0 top-0 -z-10'}>
+      <div className={'fixed top-0 right-0 bottom-0 left-0 -z-10'}>
         {bgImage && <img src={bgImage} alt={`Helnwein Category ${categoryContext.activeCategory?.title}`} className={'h-screen w-screen object-cover'} />}
       </div>
     </>

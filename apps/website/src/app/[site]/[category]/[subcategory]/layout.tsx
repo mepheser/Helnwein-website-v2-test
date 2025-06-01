@@ -10,8 +10,6 @@ interface Props {
   }
 }
 
-
-
 const SubCategoryLayout: FunctionComponent<Props> = ({children, params}) => {
   const categoryContext = getCategoryContext(params)
 
