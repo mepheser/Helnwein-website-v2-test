@@ -14,7 +14,7 @@ const LinkPartComponent = ({value}: any) => {
 
     return (
         <div className={'font-sans font-bold text-gray uppercase underline max-w-3xl leading-tight'}>
-            <Link href={value.url} > {value.url} </Link>
+            <a href={value.url} > {value.url} </a>
         </div>
     )
 }

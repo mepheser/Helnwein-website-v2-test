@@ -19,7 +19,7 @@ const AlternativeMainMenu: FunctionComponent<Props> = ({context}) => (
             'text-white': context.activeCategory?.id === value.id,
           })}
         >
-          <Link href={`/${context.site}/${value.link}`} >{i18n(value.title, context.language)}</Link>
+          <a href={`/${context.site}/${value.link}`} >{i18n(value.title, context.language)}</a>
         </li>
       ))}
     </ul>

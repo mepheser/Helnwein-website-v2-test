@@ -36,12 +36,12 @@ const Slideshow: FunctionComponent<Props> = ({images, categoryContext}) => {
     >
       {images.map(image => (
         <SwiperSlide key={image.image._id}>
-          <Link href={`/${categoryContext.site}/news/news_update`} >
+          <a href={`/${categoryContext.site}/news/news_update`} >
             <div className="relative h-screen w-screen">
               <Image src={imageUrl(image.image, Format.RAW)} loader={createImageLoader()} fill={true} alt={image.image.name || 'Helnwein'} className={'object-cover'} />
               <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
-          </Link>
+          </a>
         </SwiperSlide>
       ))}
     </Swiper>
