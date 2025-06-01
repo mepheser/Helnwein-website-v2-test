@@ -38,14 +38,8 @@ const ImageGroupItem: FunctionComponent<Props> = ({data, context, isSelected}) =
     window.scroll({top})
   }, [isSelected])
 
-  const toggle = useCallback(() => {
-    if (context) {
-      router.push(href(context, data, isSelected), {scroll: false})
-    }
-  }, [context, isSelected, data])
-
   return (
-    <a onClick={toggle}>
+    <a href={context ? href(context, data, isSelected) : '#'}>
       <div className={'group relative h-[235px] w-[300px] cursor-pointer'} ref={ref}>
         <ImageGroupPreviewImage image={data.image} />
         {(context === undefined || context.activeSubcategory!.id === 'studio') && <ImageGroupItemLabel data={data} />}
