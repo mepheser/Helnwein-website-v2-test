@@ -1,11 +1,7 @@
 import React, {FunctionComponent} from 'react'
 import Image from 'next/image'
-import {getLiveClient} from '../../../sanity/src/liveClient'
-import imageUrlBuilder from '@sanity/image-url'
 import {HelnweinImage} from "@repo/sanity/selections";
-
-const builder = imageUrlBuilder(getLiveClient())
-
+import {Format, imageLoader, imageUrl} from "./imateUtils";
 
 interface Props {
     image: HelnweinImage | null
@@ -18,13 +14,11 @@ const BiographyImage: FunctionComponent<Props> = ({image, preload, className}) =
         return null
     }
 
-    const url = builder.image(image.image).width(150).height(150).url()
-    console.log(url, image)
-
     return (
         <Image
             className={'shrink-0'}
-            src={url}
+            src={imageUrl(image, Format.BIOGRAPHY_LIST)}
+            loader={imageLoader}
             alt={image.name || ''}
             width={150}
             height={150}

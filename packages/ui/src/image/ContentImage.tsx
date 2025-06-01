@@ -1,15 +1,12 @@
 import React, {FunctionComponent} from 'react'
-import imageUrlBuilder from '@sanity/image-url'
-import {getStaticClient} from "@repo/sanity/staticClient";
 import Image from "next/image";
 import {getImageDimensions} from "@sanity/asset-utils";
+import {Format, imageLoader, imageUrl} from "./imateUtils";
 
 interface Props {
     image: any
     alt: string
 }
-
-const builder = imageUrlBuilder(getStaticClient())
 
 const ContentImage: FunctionComponent<Props> = ({image, alt}) => {
     if (!image) {
@@ -19,7 +16,8 @@ const ContentImage: FunctionComponent<Props> = ({image, alt}) => {
     return (
         <div>
             <Image
-                src={builder.image(image).url()}
+                src={imageUrl(image, Format.RAW)}
+                loader={imageLoader}
                 alt={alt}
                 width={getImageDimensions(image).width}
                 height={getImageDimensions(image).height}

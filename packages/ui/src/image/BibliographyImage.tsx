@@ -1,11 +1,8 @@
 import React, {FunctionComponent} from 'react'
 import Image from 'next/image'
-import {getLiveClient} from '../../../sanity/src/liveClient'
-import imageUrlBuilder from '@sanity/image-url'
 import {HelnweinImage} from "@repo/sanity/selections";
 import {getImageDimensions, SanityImageDimensions} from "@sanity/asset-utils";
-
-const builder = imageUrlBuilder(getLiveClient())
+import {Format, imageLoader, imageUrl} from "./imateUtils";
 
 
 interface Props {
@@ -37,14 +34,14 @@ const BibliographyImage: FunctionComponent<Props> = ({image, preload, className}
         return null
     }
 
-    const url = builder.image(image.image).height(140).url()
     const dimensions= getImageDimensions(image.image as any)
     const aspectRatio = getCroppedDimensions(image, dimensions).aspectRatio
 
     return (
         <Image
             className={''}
-            src={url}
+            src={imageUrl(image, Format.BIBLIOGRAPHY_LIST)}
+            loader={imageLoader}
             alt={image.name || ''}
             width={140 * aspectRatio}
             height={140}

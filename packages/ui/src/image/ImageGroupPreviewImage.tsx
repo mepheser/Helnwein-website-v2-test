@@ -1,10 +1,7 @@
 import React, {FunctionComponent} from 'react'
 import Image from 'next/image'
-import {getStaticClient} from '../../../sanity/src/staticClient'
-import imageUrlBuilder from '@sanity/image-url'
 import {HelnweinImage} from "@repo/sanity/selections";
-
-const builder = imageUrlBuilder(getStaticClient())
+import {Format, imageLoader, imageUrl} from "./imateUtils";
 
 
 interface Props {
@@ -18,13 +15,11 @@ const ImageGroupPreviewImage: FunctionComponent<Props> = ({image, preload, class
         return null
     }
 
-    const url = builder.image(image.image).width(300).height(235).url()
-    console.log(url, image)
-
     return (
         <Image
             className={`shrink-0 ${className ? className : ''}`}
-            src={url}
+            src={imageUrl(image, Format.PREVIEW)}
+            loader={imageLoader}
             alt={image.name || ''}
             width={300}
             height={235}
