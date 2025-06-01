@@ -28,6 +28,7 @@ const BiographyList: FunctionComponent<Props> = async ({context, data}) => {
         <main className={'max-w-3xl'}>
             {data.map((item, index) => (
                 <Link
+                    prefetch={false}
                     key={item._id}
                     href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}>
                     <div

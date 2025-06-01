@@ -37,7 +37,7 @@ export default function LanguageSelection() {
               <LanguageSelectionItem title={'Main Helnwein Site'}>
                 <div className={'mr-2 flex cursor-pointer flex-col items-end gap-6 text-2xl'}>
                   {sites.map(value => (
-                    <Link href={`/${value.language}`}>
+                    <Link href={`/${value.language}`} prefetch={false}>
                       <div>{value.site}</div>
                     </Link>
                   ))}

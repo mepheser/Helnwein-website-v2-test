@@ -23,7 +23,7 @@ const Submenu: FunctionComponent<Props> = ({context}) => {
                 'text-white': context.activeSubcategory?.id === value.id,
               })}
             >
-              <Link href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`}>{i18n(value.id, context.language)}</Link>
+              <Link href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`} prefetch={false}>{i18n(value.id, context.language)}</Link>
             </li>
           ))}
       </ul>

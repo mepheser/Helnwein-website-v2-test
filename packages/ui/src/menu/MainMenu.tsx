@@ -12,7 +12,7 @@ interface Props {
 const MainMenu: FunctionComponent<Props> = ({context}) => (
   <header className={'mb-10'}>
     <h1 className={'-ml-1.5 font-logo text-[80px] font-bold uppercase leading-none tracking-wide'}>
-      <Link href={`/${context.site}`}>
+      <Link href={`/${context.site}`} prefetch={false}>
         <>
           <span className={'text-logo1'}>{i18n(context.activeCategory?.title, context.language)}</span>
           <span className={'text-logo2'}>Helnwein</span>
@@ -28,7 +28,7 @@ const MainMenu: FunctionComponent<Props> = ({context}) => (
             'text-white': context.activeCategory?.id === value.id,
           })}
         >
-          <Link href={value.link.startsWith('https://') ? value.link : `/${context.site}${value.link}`}>{i18n(value.title, context.language)}</Link>
+          <Link href={value.link.startsWith('https://') ? value.link : `/${context.site}${value.link}`} prefetch={false}>{i18n(value.title, context.language)}</Link>
         </li>
       ))}
     </ul>
