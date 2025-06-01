@@ -1,7 +1,9 @@
+'use client'
+
 import React, {FunctionComponent} from 'react'
 import Image from 'next/image'
 import {HelnweinImage} from "@repo/sanity/selections";
-import {Format, imageLoader, imageUrl} from "./imateUtils";
+import {Format, createImageLoader, imageUrl} from "./imateUtils";
 
 
 interface Props {
@@ -19,7 +21,7 @@ const ImageGroupPreviewImage: FunctionComponent<Props> = ({image, preload, class
         <Image
             className={`shrink-0 ${className ? className : ''}`}
             src={imageUrl(image, Format.PREVIEW)}
-            loader={imageLoader}
+            loader={createImageLoader()}
             alt={image.name || ''}
             width={300}
             height={235}

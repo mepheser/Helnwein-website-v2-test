@@ -37,7 +37,8 @@ export const sanityImageSelection = {
 
 export const helnweinImageSelection = {
   _id: q.string(),
-  _updatedAt: q.date().default(new Date()),
+  _createdAt: q.date(),
+  _updatedAt: q.date(),
   externalId: q.string().optional(),
   width: q.string().optional(),
   height: q.string().optional(),
@@ -74,7 +75,7 @@ export const articleSelection = {
       '_type == "block"': ['{...}', q.contentBlock()],
       '_type == "imagePart"': {
         _type: q.literal('imagePart'),
-        imageAsset: ['image->image.asset->', q.unknown()],
+        image: q('image').deref().grab$(helnweinImageSelection).nullable(),
         imageMeta: q('image->').grab$(articleImageSelection).nullable()
       },
       '_type == "linkPart"': {

@@ -1,8 +1,10 @@
+'use client'
+
 import React, {FunctionComponent} from 'react'
 import Image from 'next/image'
 import {HelnweinImage} from "@repo/sanity/selections";
 import {getImageDimensions, SanityImageDimensions} from "@sanity/asset-utils";
-import {Format, imageLoader, imageUrl} from "./imateUtils";
+import {createImageLoader, Format, imageUrl} from "./imateUtils";
 
 
 interface Props {
@@ -41,7 +43,7 @@ const BibliographyImage: FunctionComponent<Props> = ({image, preload, className}
         <Image
             className={''}
             src={imageUrl(image, Format.BIBLIOGRAPHY_LIST)}
-            loader={imageLoader}
+            loader={createImageLoader()}
             alt={image.name || ''}
             width={140 * aspectRatio}
             height={140}

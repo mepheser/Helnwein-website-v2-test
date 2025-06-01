@@ -16,6 +16,8 @@ const ImagesPreviewPage: FunctionComponent<Props> = async ({params}) => {
     const {id} = await params
     const data = await getImageDetail(id)
 
+    console.log('imageDetail', data)
+
     const article: ArticleListItem = {
         image: data,
         title: "Test title",
@@ -60,7 +62,7 @@ const ImagesPreviewPage: FunctionComponent<Props> = async ({params}) => {
             <p className={'max-w-3xl my-4 font-serif'}>
                 So sieht das Bild im Artikel-Content aus. Das Bild nimmt die maximale Breite, die Höhe passt sich an. Der Ausschnitt wird NICHT aus dem CMS übernommen.
             </p>
-            <ContentImage image={{asset: data.image.asset}} alt={data.name!}/>
+            <ContentImage image={data} alt={data.name!}/>
         </div>
     )
 }

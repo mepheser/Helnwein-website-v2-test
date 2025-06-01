@@ -1,7 +1,9 @@
+'use client'
+
 import React, {FunctionComponent} from 'react'
 import Image from "next/image";
 import {getImageDimensions} from "@sanity/asset-utils";
-import {Format, imageLoader, imageUrl} from "./imateUtils";
+import {createImageLoader, Format, imageUrl} from "./imateUtils";
 
 interface Props {
     image: any
@@ -17,10 +19,10 @@ const ContentImage: FunctionComponent<Props> = ({image, alt}) => {
         <div>
             <Image
                 src={imageUrl(image, Format.RAW)}
-                loader={imageLoader}
+                loader={createImageLoader()}
                 alt={alt}
-                width={getImageDimensions(image).width}
-                height={getImageDimensions(image).height}
+                width={getImageDimensions(image.image).width}
+                height={getImageDimensions(image.image).height}
                 sizes="
             (max-width: 768px) 100vw,
             (max-width: 1200px) 50vw,

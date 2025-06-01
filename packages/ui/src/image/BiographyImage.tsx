@@ -1,7 +1,9 @@
+'use client'
+
 import React, {FunctionComponent} from 'react'
 import Image from 'next/image'
 import {HelnweinImage} from "@repo/sanity/selections";
-import {Format, imageLoader, imageUrl} from "./imateUtils";
+import {createImageLoader, Format, imageUrl} from "./imateUtils";
 
 interface Props {
     image: HelnweinImage | null
@@ -18,7 +20,7 @@ const BiographyImage: FunctionComponent<Props> = ({image, preload, className}) =
         <Image
             className={'shrink-0'}
             src={imageUrl(image, Format.BIOGRAPHY_LIST)}
-            loader={imageLoader}
+            loader={createImageLoader()}
             alt={image.name || ''}
             width={150}
             height={150}

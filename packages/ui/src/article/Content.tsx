@@ -26,7 +26,7 @@ const ImagePartComponent = ({value}: any) => {
 
     return (
         <div className={'mb-8'}>
-            <ContentImage image={value.imageAsset} alt={'test'}/>
+            <ContentImage image={value.image} alt={'test'}/>
             {value.imageMeta && value.imageMeta.name && (
                 <div className={'text-gray font-bold font-sans'}>
                     {value.imageMeta.name}

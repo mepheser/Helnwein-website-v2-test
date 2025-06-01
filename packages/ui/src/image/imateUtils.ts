@@ -11,8 +11,10 @@ export enum Format {
 
 }
 
-export const imageLoader = ({src}: {src: string}) =>
+export const createImageLoader = () => ({src}: {src: string}) =>
     `https://helnwein-website-images.b-cdn.net/images${src}`
 
-export const imageUrl = (image: HelnweinImage, format: Format)=>
-    `/${image._id}/${image._updatedAt ? image._updatedAt.getTime() : new Date().getTime()}/${format}/${encodeURIComponent(image.name || image._id)}.webp`
+export const imageUrl = (image: HelnweinImage, format: Format)=> {
+    const name = image.name ? image.name.replaceAll(' ', '_') : image._id
+    return `/${image._id}/${image._updatedAt ? image._updatedAt.getTime() : image._createdAt.getTime()}/${format}/${encodeURIComponent(name)}.webp`;
+}
