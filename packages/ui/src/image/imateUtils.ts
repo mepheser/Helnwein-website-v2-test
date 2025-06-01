@@ -12,7 +12,7 @@ export enum Format {
 }
 
 export const imageLoader = ({src}: {src: string}) =>
-    `https://helnwein-website-images.b-cdn.net${src}`
+    `https://helnwein-website-images.b-cdn.net/images${src}`
 
 export const imageUrl = (image: HelnweinImage, format: Format)=>
-    `/${image._id}/${image._ref}/${format}/${encodeURIComponent(image.name || image._id)}.webp`
+    `/${image._id}/${image._updatedAt.getTime()}/${format}/${encodeURIComponent(image.name || image._id)}.webp`

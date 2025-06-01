@@ -37,7 +37,7 @@ export const sanityImageSelection = {
 
 export const helnweinImageSelection = {
   _id: q.string(),
-  _ref: q.string(),
+  _updatedAt: q.date(),
   externalId: q.string().optional(),
   width: q.string().optional(),
   height: q.string().optional(),
