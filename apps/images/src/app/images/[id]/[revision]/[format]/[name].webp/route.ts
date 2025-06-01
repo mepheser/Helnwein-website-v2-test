@@ -75,7 +75,7 @@ export async function GET(
                     hotspot: undefined,
                 })
                 .format('webp')
-                .width(140)
+                .height(140)
             break
         }
         default: {
