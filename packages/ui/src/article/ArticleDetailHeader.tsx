@@ -3,13 +3,19 @@ import Optional from '../Optional'
 import {ArticleDetail} from '@repo/sanity/selections'
 import {format} from "date-fns";
 
-const Date: FunctionComponent<{displayDate?: Date}> = ({displayDate}) => (
-  <Optional data={displayDate}>
-    <div className={'font-sans text-lg font-bold  text-gray '}>
+const Date: FunctionComponent<{displayDate?: Date}> = ({displayDate}) => {
+  if (!displayDate) {
+    return null
+  }
+
+  return (
+    <Optional data={displayDate}>
+      <div className={'font-sans text-lg font-bold  text-gray '}>
         {format(displayDate!, 'MMMM d, yyyy')}
-    </div>
-  </Optional>
-)
+      </div>
+    </Optional>
+  )
+}
 
 const Source: FunctionComponent<{source?: string}> = ({source}) => (
   <Optional data={source}>
