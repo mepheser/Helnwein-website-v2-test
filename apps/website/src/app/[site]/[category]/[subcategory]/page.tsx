@@ -7,7 +7,14 @@ import QuoteHelnweinList from '@repo/ui/quote/QuoteHelnweinList'
 import FeedbackList from '@repo/ui/quote/FeedbackList'
 import BiographyList from '@repo/ui/article/BiographyList'
 import BibliographyList from '@repo/ui/article/BibliographyList'
-import {getArticleList, getBibliographyList, getBiographyList, getQuoteHelnweinList, getQuoteList} from '@repo/sanity/queries'
+import {
+  getArticleList,
+  getBibliographyList,
+  getBiographyList,
+  getImageGroupList,
+  getQuoteHelnweinList,
+  getQuoteList,
+} from '@repo/sanity/queries'
 
 const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
   const categoryContext = getCategoryContext(params)
@@ -40,7 +47,7 @@ const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
         </div>
       )}
       {type === 'articleDocument' && <ArticleList context={categoryContext} data={await getArticleList(categoryContext)} />}
-      {type === 'imageGroupDocument' && <ImageGroupList context={categoryContext} />}
+      {type === 'imageGroupDocument' && <ImageGroupList context={categoryContext} data={await getImageGroupList(categoryContext.activeSubcategory?.id!) }/>}
       {type === 'quoteDocument' && <QuoteList data={await getQuoteList()} />}
       {type === 'quoteHelnweinDocument' && <QuoteHelnweinList data={await getQuoteHelnweinList()} />}
       {type === 'feedbackDocument' && <FeedbackList context={categoryContext} />}

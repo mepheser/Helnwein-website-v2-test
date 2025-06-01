@@ -4,10 +4,10 @@ import React, {FunctionComponent, useCallback, useEffect, useRef} from 'react'
 import {ImageGroupListItem} from '@repo/sanity/selections'
 import {CategoryContext} from '@repo/sanity/categories'
 import {useRouter} from 'next/navigation'
-import ImageGroupItemHover from "./ImageGroupItemHover";
-import ImageGroupItemSelected from "./ImageGroupItemSelected";
-import ImageGroupPreviewImage from "../image/ImageGroupPreviewImage";
-import ImageGroupItemLabel from "./ImageGroupItemLabel";
+import ImageGroupItemHover from './ImageGroupItemHover'
+import ImageGroupItemSelected from './ImageGroupItemSelected'
+import ImageGroupPreviewImage from '../image/ImageGroupPreviewImage'
+import ImageGroupItemLabel from './ImageGroupItemLabel'
 
 interface Props {
   data: ImageGroupListItem
@@ -21,8 +21,8 @@ const href = (context: CategoryContext, data: ImageGroupListItem, isSelected: bo
   }
 
   return isSelected
-      ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id}/`
-      : `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id}/imagegroup/${data._id}`;
+    ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id}/`
+    : `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id}/imagegroup/${data._id}`
 }
 
 const ImageGroupItem: FunctionComponent<Props> = ({data, context, isSelected}) => {
@@ -30,10 +30,12 @@ const ImageGroupItem: FunctionComponent<Props> = ({data, context, isSelected}) =
   const router = useRouter()
 
   useEffect(() => {
-    if (isSelected) {
-      const top = ref.current!.offsetTop
-      window.scroll({top})
+    if (!isSelected) {
+      return
     }
+
+    const top = ref.current!.offsetTop
+    window.scroll({top})
   }, [isSelected])
 
   const toggle = useCallback(() => {
@@ -43,16 +45,17 @@ const ImageGroupItem: FunctionComponent<Props> = ({data, context, isSelected}) =
   }, [context, isSelected, data])
 
   return (
-    <>
-      <a onClick={toggle}>
-        <div className={'group relative h-[235px] w-[300px] cursor-pointer'} ref={ref}>
-          <ImageGroupPreviewImage image={data.image} />
-          {(context === undefined || context.activeSubcategory!.id === 'studio') && <ImageGroupItemLabel data={data} />}
-          <ImageGroupItemHover data={data} />
-          {isSelected && <ImageGroupItemSelected data={data} />}
-        </div>
-      </a>
-    </>
+    <a onClick={toggle}>
+      <div className={'group relative h-[235px] w-[300px] cursor-pointer'} ref={ref}>
+        <ImageGroupPreviewImage image={data.image} />
+        {(context === undefined || context.activeSubcategory!.id === 'studio') && <ImageGroupItemLabel data={data} />}
+        <ImageGroupItemHover data={data} />
+        {isSelected && <ImageGroupItemSelected data={data} />}
+        {isSelected && (
+          <div className={'absolute left-1/2 h-8 w-[1px] bg-gray'}></div>
+        )}
+      </div>
+    </a>
   )
 }
 

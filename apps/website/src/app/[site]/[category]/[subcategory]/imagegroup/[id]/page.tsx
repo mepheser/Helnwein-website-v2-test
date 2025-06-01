@@ -1,10 +1,12 @@
 import React, {FunctionComponent} from 'react'
 import ImageGroupList from '@repo/ui/image-group/ImageGroupList'
 import {getCategoryContext} from '@repo/sanity/categories'
+import {getImageGroupList} from '@repo/sanity/queries'
 
 const ArticleDetailPage: FunctionComponent<any> = async ({params}) => {
   const context = getCategoryContext(params)
-  return <ImageGroupList context={context} selected={params.id} />
+  const data = await getImageGroupList(context.activeSubcategory?.id!)
+  return <ImageGroupList context={context} selected={params.id} data={data} />
 }
 
 export default ArticleDetailPage
