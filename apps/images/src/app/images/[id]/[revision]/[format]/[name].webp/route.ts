@@ -61,11 +61,7 @@ export async function GET(
         }
         case Format.BIOGRAPHY_LIST: {
             image = builder
-                .image({
-                    ...meta.image,
-                    crop: undefined,
-                    hotspot: undefined,
-                })
+                .image(meta.image)
                 .format('webp')
                 .width(150)
                 .height(150)
@@ -73,7 +69,11 @@ export async function GET(
         }
         case Format.BIBLIOGRAPHY_LIST: {
             image = builder
-                .image(meta.image)
+                .image({
+                    ...meta.image,
+                    crop: undefined,
+                    hotspot: undefined,
+                })
                 .format('webp')
                 .width(140)
             break
