@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react'
 import {CategoryContext} from '@repo/sanity/categories'
 import Link from 'next/link'
-import ThumbnailImage from '../image/ThumbnailImage'
+import ArticleListImage from '../image/ArticleListImage'
 import {ArticleListItem} from "@repo/sanity/selections";
 
 interface Props {
@@ -14,7 +14,7 @@ const BibliographyList: FunctionComponent<Props> = async ({context, data}) => {
     <main className={'flex flex-wrap gap-2'}>
       {data.map((item) => (
         <Link href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'} key={item._id}>
-          <ThumbnailImage image={item.image} />
+          <ArticleListImage image={item.image} />
         </Link>
       ))}
     </main>

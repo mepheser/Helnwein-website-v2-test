@@ -4,7 +4,7 @@ import ArticleList from "@repo/ui/article/ArticleList";
 import {ArticleListItem} from "@repo/sanity/selections";
 import ContentImage from "@repo/ui/image/ContentImage";
 import BiographyList from "@repo/ui/article/BiographyList";
-import ThumbnailImage from "@repo/ui/image/ThumbnailImage";
+import ArticleListImage from "@repo/ui/image/ArticleListImage";
 import BibliographyImage from "@repo/ui/image/BibliographyImage";
 
 interface Props {

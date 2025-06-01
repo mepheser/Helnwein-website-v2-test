@@ -11,7 +11,7 @@ interface Props {
     className?: string
 }
 
-const ThumbnailImage: FunctionComponent<Props> = ({image, preload, className}) => {
+const ArticleListImage: FunctionComponent<Props> = ({image, preload, className}) => {
     if (!image) {
         return null
     }
@@ -19,7 +19,7 @@ const ThumbnailImage: FunctionComponent<Props> = ({image, preload, className}) =
     return (
         <Image
             className={`shrink-0 ${className ? className : ''}`}
-            src={imageUrl(image, Format.THUMBNAIL)}
+            src={imageUrl(image, Format.ARTICLE_LIST)}
             loader={createImageLoader()}
             alt={image.name || ''}
             width={150}
@@ -31,4 +31,4 @@ const ThumbnailImage: FunctionComponent<Props> = ({image, preload, className}) =
     )
 }
 
-export default ThumbnailImage
+export default ArticleListImage

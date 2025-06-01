@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Optional from '../Optional'
 import Image from 'next/image'
 import {ArticleListItem} from "@repo/sanity/selections";
-import ThumbnailImage from "../image/ThumbnailImage";
+import ArticleListImage from "../image/ArticleListImage";
 import {CategoryContext} from "@repo/sanity/categories";
 
 const Date: FunctionComponent<{displayDate?: string}> = ({displayDate}) => (
@@ -54,7 +54,7 @@ const ArticleList: FunctionComponent<Props> = async ({data, context}) => {
         <Link href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'} key={item._id}>
           <div key={item._id! + index + (context && context.activeCategory?.id) + (context && context.activeSubcategory?.id)} className={'max-w-3xl text-lg'}>
             <div className={'flex gap-8'}>
-              <ThumbnailImage image={item.image} />
+              <ArticleListImage image={item.image} />
               <div className={'mb-4'}>
                 <div className={'flex gap-2'}>
                   <Date displayDate={undefined} />
