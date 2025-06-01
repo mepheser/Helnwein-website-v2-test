@@ -47,7 +47,7 @@ const ImageGroupItem: FunctionComponent<Props> = ({data, context, isSelected}) =
       <a onClick={toggle}>
         <div className={'group relative h-[235px] w-[300px] cursor-pointer'} ref={ref}>
           <ImageGroupPreviewImage image={data.image} />
-          <ImageGroupItemLabel data={data} />
+          {(context === undefined || context.activeSubcategory!.id === 'studio') && <ImageGroupItemLabel data={data} />}
           <ImageGroupItemHover data={data} />
           {isSelected && <ImageGroupItemSelected data={data} />}
         </div>
