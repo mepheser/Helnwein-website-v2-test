@@ -57,7 +57,7 @@ const ArticleList: FunctionComponent<Props> = async ({data, context}) => {
       {data.map((item, index) => (
         <Link
           href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}
-          key={item._id} prefetch={false}>
+          key={item._id} >
           <div
             key={item._id! + index + (context && context.activeCategory?.id) + (context && context.activeSubcategory?.id)}
             className={'max-w-3xl text-lg'}>
