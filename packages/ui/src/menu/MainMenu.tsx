@@ -28,7 +28,7 @@ const MainMenu: FunctionComponent<Props> = ({context}) => (
             'text-white': context.activeCategory?.id === value.id,
           })}
         >
-          <Link href={value.link.startsWith('https://') ? value.link : `/${context.site}${value.link}`} prefetch={false}>{i18n(value.title, context.language)}</Link>
+          <a href={value.link.startsWith('https://') ? value.link : `/${context.site}${value.link}`}>{i18n(value.title, context.language)}</a>
         </li>
       ))}
     </ul>

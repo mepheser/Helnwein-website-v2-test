@@ -18,7 +18,7 @@ const ArticleListImage: FunctionComponent<Props> = ({image, preload, className})
 
     return (
         <Image
-            className={`shrink-0 ${className ? className : ''}`}
+            className={`shrink-0 min-w-[150px] ${className ? className : ''}`}
             src={imageUrl(image, Format.ARTICLE_LIST)}
             loader={createImageLoader()}
             alt={image.name || ''}
@@ -26,7 +26,6 @@ const ArticleListImage: FunctionComponent<Props> = ({image, preload, className})
             height={200}
             title={image.name}
             priority={preload}
-            sizes={'(max-width: 768px) 100vw, 75vw'}
         />
     )
 }
