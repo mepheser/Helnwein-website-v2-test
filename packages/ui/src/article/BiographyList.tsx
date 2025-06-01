@@ -27,8 +27,7 @@ const BiographyList: FunctionComponent<Props> = async ({context, data}) => {
     return (
         <main className={'max-w-3xl'}>
             {data.filter((value, index) => index < 10).map((item, index) => (
-                <Link
-                    
+                <a
                     key={item._id}
                     href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}>
                     <div
@@ -46,7 +45,7 @@ const BiographyList: FunctionComponent<Props> = async ({context, data}) => {
                         </div>
                         <hr className={'my-10 text-white opacity-5'}/>
                     </div>
-                </Link>
+                </a>
             ))}
         </main>
     )
