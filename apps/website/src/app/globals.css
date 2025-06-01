@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@source "../../../../packages/ui/src";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-black: #201f24;
+  --color-white: #d1cfcd;
+  --color-gray: #787f8b;
+  --color-selected: #FFFFFF;
+  --color-logo1: #54545f;
+  --color-logo2: #4a4a54;
+
+  --font-sans: var(--font-cervo-neue);
+  --font-serif: var(--font-zilla-slab);
+  --font-special: var(--font-brandon-grotesque);
+  --font-logo: sans-serif;
+}
+
+body {
+  @apply bg-black font-sans text-white;
+}

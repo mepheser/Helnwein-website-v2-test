@@ -2,8 +2,8 @@ import {q, TypeFromSelection} from 'groqd'
 import {runQuery} from './liveClient'
 import {
   articleListSelection,
-  articleSelection,
-  helnweinImageSelection, imageGroupListSelection,
+  articleSelection, feedbackSelection,
+  helnweinImageSelection, imageGroupListSelection, introPageSelection,
   quoteHelnweinSelection,
   quoteSelection
 } from './selections'
@@ -84,5 +84,31 @@ export const getImageMeta = async (id: string): Promise<TypeFromSelection<typeof
   )
   return result[0]
 }
+
+export const getIntroPage = async (domain: string): Promise<TypeFromSelection<typeof introPageSelection>> => {
+  let result = await runQuery(q(`*[domain == '${domain}']`, {isArray: true}).filterByType('introPage').grab$(introPageSelection))
+
+  if (!result[0]) {
+    result = await runQuery(q(`*[domain == 'main-en']`, {isArray: true}).filterByType('introPage').grab$(introPageSelection))
+  }
+
+  return result[0]
+}
+
+export const getQuoteList = async (): Promise<TypeFromSelection<typeof quoteSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true}).filterByType('quoteDocument').order('orderDate desc').grab$(quoteSelection))
+}
+
+export const getQuoteHelnweinList = async (): Promise<TypeFromSelection<typeof quoteHelnweinSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true}).filterByType('quoteHelnweinDocument').order('orderDate desc').grab$(quoteHelnweinSelection))
+}
+
+
+export const getFeedbackList = async (): Promise<TypeFromSelection<typeof feedbackSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true}).filterByType('feedbackDocument').order('orderDate desc').grab$(feedbackSelection))
+}
+
+
+
 
 
