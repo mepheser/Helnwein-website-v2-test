@@ -26,7 +26,7 @@ interface Props {
 const BiographyList: FunctionComponent<Props> = async ({context, data}) => {
     return (
         <main className={'max-w-3xl'}>
-            {data.map((item, index) => (
+            {data.filter((value, index) => index < 10).map((item, index) => (
                 <Link
                     
                     key={item._id}

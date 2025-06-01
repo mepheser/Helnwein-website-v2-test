@@ -54,7 +54,7 @@ interface Props {
 const ArticleList: FunctionComponent<Props> = async ({data, context}) => {
   return (
     <main className={'max-w-3xl'}>
-      {data.map((item, index) => (
+      {data.filter((value, index) => index < 10).map((item, index) => (
         <Link
           href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}
           key={item._id} >

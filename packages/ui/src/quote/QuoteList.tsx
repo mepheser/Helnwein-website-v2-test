@@ -8,7 +8,7 @@ interface Props {
 const QuoteList: FunctionComponent<Props> = async ({data}) => {
   return (
     <div>
-      {data.map(item => (
+      {data.filter((value, index) => index < 10).map(item => (
         <div key={item._id} className={'mb-14 mt-3 max-w-3xl'}>
           <div style={{marginBottom: 10}}>
             <div className={'font-serif text-xl font-light lg:text-3xl'}> &quot;{item.abstractContent}&quot; </div>

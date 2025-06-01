@@ -12,7 +12,7 @@ interface Props {
 const BibliographyList: FunctionComponent<Props> = async ({context, data}) => {
   return (
     <main className={'flex flex-wrap gap-2'}>
-      {data.map((item) => (
+      {data.filter((value, index) => index < 50).map((item) => (
         <Link href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'} key={item._id} >
           <ArticleListImage image={item.image} />
         </Link>
