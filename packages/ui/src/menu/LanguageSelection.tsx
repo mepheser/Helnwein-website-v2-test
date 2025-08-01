@@ -11,7 +11,7 @@ export default function LanguageSelection() {
   return (
     <Popover className="">
       <div className="fixed right-4 top-4 z-30 rounded bg-black bg-opacity-80">
-        <Popover.Button className="tems-center inline-flex items-center gap-x-1 rounded bg-gray bg-opacity-10 px-2 py-1.5 text-sm font-semibold uppercase leading-6 tracking-wide text-gray">
+        <Popover.Button className="tems-center inline-flex items-center gap-x-1 rounded  bg-opacity-10 px-2 py-1.5 text-sm font-semibold uppercase leading-6 tracking-wide text-gray">
           {({open}) => (
             <>
               <span>Language</span>

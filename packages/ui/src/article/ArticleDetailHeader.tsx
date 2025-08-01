@@ -46,6 +46,7 @@ interface Props {
 }
 
 const ArticleDetailHeader: FunctionComponent<Props> = ({data}) => {
+  console.log(data)
   return (
     <>
       <div className={'max-w-3xl text-lg'}>

@@ -1,9 +1,21 @@
 import React, {FunctionComponent} from 'react'
 import ArticleDetail from '@repo/ui/article/ArticleDetail'
-import {getArticleDetail} from '@repo/sanity/queries'
+import {getArticleDetail, getBibliographyDetail, getBiographyDetail} from '@repo/sanity/queries'
 
 const ArticleDetailPage: FunctionComponent<any> = async ({params}) => {
-  const data = await getArticleDetail(params.id)
+  const {subcategory, id} = await params
+
+  let data;
+
+  if (subcategory === 'biography') {
+    data = await getBiographyDetail(id)
+  } else if (subcategory === 'bibliography') {
+    data = await getBibliographyDetail(id)
+  } else {
+    data = await getArticleDetail(id)
+  }
+
+
   return <ArticleDetail data={data} />
 }
 
