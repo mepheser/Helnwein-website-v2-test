@@ -45,7 +45,7 @@ export const subcategories = [
     id: 'exhibitions',
     title: 'Exhibitions',
     type: 'articleDocument',
-    orderCustom: true,
+    orderCustom: false,
   },
   {
     id: 'interviews',
@@ -159,7 +159,7 @@ export const subcategories = [
     id: 'selected_authors',
     title: 'Selected Authors',
     type: 'articleDocument',
-    orderCustom: false,
+    orderCustom: true,
   },
   {
     id: 'english_texts',

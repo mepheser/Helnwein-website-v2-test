@@ -74,7 +74,7 @@ export const getBiographyList = async (): Promise<TypeFromSelection<typeof artic
 }
 
 export const getBibliographyList = async (): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true}).filterByType('bibliographyDocument').order('orderDate desc').grab$(articleListSelection))
+  return await runQuery(q(`*[]`, {isArray: true}).filterByType('bibliographyDocument').order('orderCustom asc', 'orderDate desc').grab$(articleListSelection))
 }
 
 export const getImageMeta = async (id: string): Promise<TypeFromSelection<typeof helnweinImageSelection>> => {
