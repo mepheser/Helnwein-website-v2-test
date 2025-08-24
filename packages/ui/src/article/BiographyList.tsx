@@ -23,10 +23,10 @@ interface Props {
     context?: CategoryContext
 }
 
-const BiographyList: FunctionComponent<Props> = async ({context, data}) => {
+const BiographyList: FunctionComponent<Props> = ({context, data}) => {
     return (
         <main className={'max-w-3xl'}>
-            {data.filter((value, index) => index < 10).map((item, index) => (
+            {data.map((item, index) => (
                 <a
                     key={item._id}
                     href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}>

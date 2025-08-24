@@ -9,10 +9,10 @@ interface Props {
   context?: CategoryContext
 }
 
-const BibliographyList: FunctionComponent<Props> = async ({context, data}) => {
+const BibliographyList: FunctionComponent<Props> = ({context, data}) => {
   return (
     <main className={'flex flex-wrap gap-2'}>
-      {data.filter((value, index) => index < 50).map((item) => (
+      {data.map((item) => (
         <a href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'} key={item._id} >
           <ArticleListImage image={item.image} />
         </a>

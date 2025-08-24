@@ -5,10 +5,10 @@ interface Props {
   data: QuoteHelnweinDetail[]
 }
 
-const QuoteHelnweinList: FunctionComponent<Props> = async ({data}) => {
+const QuoteHelnweinList: FunctionComponent<Props> = ({data}) => {
   return (
     <div>
-      {data.filter((value, index) => index < 10).map(item => (
+      {data.map(item => (
         <div key={item._id} className={'mb-14 mt-3 max-w-3xl'}>
           <div style={{marginBottom: 10}}>
             <div className={'font-serif text-xl font-light lg:text-3xl'}> &quot;{item.abstractContent}&quot; </div>

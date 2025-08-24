@@ -10,11 +10,17 @@ import BibliographyList from '@repo/ui/article/BibliographyList'
 import {
   getArticleList,
   getBibliographyList,
-  getBiographyList,
+  getBiographyList, getFeedbackList,
   getImageGroupList,
   getQuoteHelnweinList,
   getQuoteList,
 } from '@repo/sanity/queries'
+import ArticlePage from '@/app/[site]/[category]/[subcategory]/ArticlePage'
+import QuotePage from '@/app/[site]/[category]/[subcategory]/QuotePage'
+import QuoteHelnweinPage from '@/app/[site]/[category]/[subcategory]/QuoteHelnweinPage'
+import FeedbackPage from '@/app/[site]/[category]/[subcategory]/FeedbackPage'
+import BibliographyPage from '@/app/[site]/[category]/[subcategory]/BibliographyPage'
+import BiographyPage from '@/app/[site]/[category]/[subcategory]/BiographyPage'
 
 const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
   const categoryContext = getCategoryContext(params)
@@ -46,13 +52,13 @@ const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
           <div>Texte, Rezensionen und Essays, über Gottfried Helnweins Arbeit für die Bühne. Theater, Ballet, Oper, Video und Film. Bühnenbild, Licht, Kostüme und Maske.</div>
         </div>
       )}
-      {type === 'articleDocument' && <ArticleList context={categoryContext} data={await getArticleList(categoryContext)} />}
+      {type === 'articleDocument' && <ArticlePage context={categoryContext} data={await getArticleList(categoryContext)} />}
       {type === 'imageGroupDocument' && <ImageGroupList context={categoryContext} data={await getImageGroupList(categoryContext.activeSubcategory?.id!) }/>}
-      {type === 'quoteDocument' && <QuoteList data={await getQuoteList()} />}
-      {type === 'quoteHelnweinDocument' && <QuoteHelnweinList data={await getQuoteHelnweinList()} />}
-      {type === 'feedbackDocument' && <FeedbackList context={categoryContext} />}
-      {type === 'biographyDocument' && <BiographyList context={categoryContext} data={await getBiographyList()} />}
-      {type === 'bibliographyDocument' && <BibliographyList context={categoryContext} data={await getBibliographyList()} />}
+      {type === 'quoteDocument' && <QuotePage data={await getQuoteList()} />}
+      {type === 'quoteHelnweinDocument' && <QuoteHelnweinPage data={await getQuoteHelnweinList()} />}
+      {type === 'feedbackDocument' && <FeedbackPage data={await getFeedbackList()} />}
+      {type === 'biographyDocument' && <BiographyPage data={await getBiographyList()} />}
+      {type === 'bibliographyDocument' && <BibliographyPage data={await getBibliographyList()} />}
     </div>
   )
 }

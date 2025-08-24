@@ -1,5 +1,4 @@
 import React, {FunctionComponent} from 'react'
-import Link from 'next/link'
 import Optional from '../Optional'
 import Image from 'next/image'
 import {ArticleListItem} from '@repo/sanity/selections'
@@ -39,22 +38,15 @@ const AuthorDescription: FunctionComponent<{authorDescription?: string}> = ({aut
   </Optional>
 )
 
-const Thumbnail: FunctionComponent<{item: any}> = ({item}) => (
-  <div style={{minWidth: 150, minHeight: 200, height: 200}} className={'relative -z-10'}>
-    {item.previewImageId && item.previewImageId !== '0' &&
-      <Image alt={'Thumbnail'} fill={true} src={`/${item.previewImageId}/ARTICLE_LIST`} />}
-  </div>
-)
-
 interface Props {
   data: ArticleListItem[],
   context?: CategoryContext
 }
 
-const ArticleList: FunctionComponent<Props> = async ({data, context}) => {
+const ArticleList: FunctionComponent<Props> = ({data, context}) => {
   return (
     <main className={'max-w-3xl'}>
-      {data.filter((value, index) => index < 10).map((item, index) => (
+      {data.map((item, index) => (
         <a
           href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}
           key={item._id} >

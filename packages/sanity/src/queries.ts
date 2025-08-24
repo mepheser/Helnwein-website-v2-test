@@ -9,11 +9,14 @@ import {
 } from './selections'
 import {CategoryContext} from "./categories";
 
-export const getArticleList = async (context: CategoryContext): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
+const pageSize = 10;
+
+export const getArticleList = async (context: CategoryContext, page = 0): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
   const query = q(`*['${context.activeSubcategory?.id}' in categories && '${context.domain}' in domains]`, {isArray: true})
       .filterByType('articleDocument')
       .grab$(articleListSelection)
       .order(...(context.activeSubcategory?.orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
+      .slice(page * pageSize, page * pageSize + pageSize - 1)
 
   return await runQuery(query)
 }
@@ -69,12 +72,20 @@ export const getImageGroupList = async (category: string): Promise<TypeFromSelec
   return await runQuery(q(`*['${category}' in categories]`, {isArray: true}).filterByType('imageGroupDocument').order('orderDate desc').grab$(imageGroupListSelection).slice(0, 100))
 }
 
-export const getBiographyList = async (): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true}).filterByType('biographyDocument').order('orderCustom asc', 'orderDate desc').grab$(articleListSelection).slice(0, 100))
+export const getBiographyList = async (page = 0): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true})
+    .filterByType('biographyDocument')
+    .order('orderCustom asc', 'orderDate desc')
+    .slice(page * pageSize, page * pageSize + pageSize - 1)
+    .grab$(articleListSelection))
 }
 
-export const getBibliographyList = async (): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true}).filterByType('bibliographyDocument').order('orderCustom asc', 'orderDate desc').grab$(articleListSelection))
+export const getBibliographyList = async (page = 0): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true})
+    .filterByType('bibliographyDocument')
+    .order('orderCustom asc', 'orderDate desc')
+    .slice(page * 100, page * pageSize + 100 - 1)
+    .grab$(articleListSelection))
 }
 
 export const getImageMeta = async (id: string): Promise<TypeFromSelection<typeof helnweinImageSelection>> => {
@@ -95,17 +106,29 @@ export const getIntroPage = async (domain: string): Promise<TypeFromSelection<ty
   return result[0]
 }
 
-export const getQuoteList = async (): Promise<TypeFromSelection<typeof quoteSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true}).filterByType('quoteDocument').order('orderDate desc').grab$(quoteSelection))
+export const getQuoteList = async (page = 0): Promise<TypeFromSelection<typeof quoteSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true})
+    .filterByType('quoteDocument')
+    .order('orderDate desc')
+    .slice(page * pageSize, page * pageSize + pageSize - 1)
+    .grab$(quoteSelection))
 }
 
-export const getQuoteHelnweinList = async (): Promise<TypeFromSelection<typeof quoteHelnweinSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true}).filterByType('quoteHelnweinDocument').order('orderDate desc').grab$(quoteHelnweinSelection))
+export const getQuoteHelnweinList = async (page = 0): Promise<TypeFromSelection<typeof quoteHelnweinSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true})
+    .filterByType('quoteHelnweinDocument')
+    .order('orderDate desc')
+    .slice(page * pageSize, page * pageSize + pageSize - 1)
+    .grab$(quoteHelnweinSelection))
 }
 
 
-export const getFeedbackList = async (): Promise<TypeFromSelection<typeof feedbackSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true}).filterByType('feedbackDocument').order('orderDate desc').grab$(feedbackSelection))
+export const getFeedbackList = async (page = 0): Promise<TypeFromSelection<typeof feedbackSelection>[]> => {
+  return await runQuery(q(`*[]`, {isArray: true})
+    .filterByType('feedbackDocument')
+    .order('orderDate desc')
+    .slice(page * pageSize, page * pageSize + pageSize - 1)
+    .grab$(feedbackSelection))
 }
 
 

@@ -228,7 +228,7 @@ export const subcategories = [
     id: 'dissertations',
     title: 'Dissertations',
     type: 'articleDocument',
-    orderCustom: false,
+    orderCustom: true,
   },
   {
     id: 'texts_by_helnwein',
