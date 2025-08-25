@@ -2,18 +2,22 @@ import {q, TypeFromSelection} from 'groqd'
 import {runQuery} from './liveClient'
 import {
   articleListSelection,
-  articleSelection, feedbackSelection,
-  helnweinImageSelection, imageGroupListSelection, introPageSelection,
+  articleSelection,
+  feedbackSelection,
+  helnweinImageSelection,
+  imageGroupListSelection,
+  introPageSelection,
   quoteHelnweinSelection,
-  quoteSelection
+  quoteSelection,
 } from './selections'
-import {CategoryContext} from "./categories";
+import {CategoryContext, Filter} from './categories'
 
-const pageSize = 10;
+const pageSize = 10
 
-export const getArticleList = async (context: CategoryContext, page = 0): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  const query = q(`*['${context.activeSubcategory?.id}' in categories && '${context.domain}' in domains]`, {isArray: true})
-      .filterByType('articleDocument')
+export const getArticleList = async (context: CategoryContext, page = 0, filter?: Filter): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
+  const filterQuery = filter ? `&& ${filter.clause}` : ''
+
+  const query = q(`*['${context.activeSubcategory?.id}' in categories && '${context.domain}' in domains ${filterQuery}]`, {isArray: true})
       .grab$(articleListSelection)
       .order(...(context.activeSubcategory?.orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
       .slice(page * pageSize, page * pageSize + pageSize - 1)
@@ -90,8 +94,8 @@ export const getBibliographyList = async (page = 0): Promise<TypeFromSelection<t
 
 export const getImageMeta = async (id: string): Promise<TypeFromSelection<typeof helnweinImageSelection>> => {
   const result = await runQuery(q(`*[_id == '${id}']`, {isArray: true})
-      .filterByType('helnweinImage')
-      .grab$(helnweinImageSelection)
+    .filterByType('helnweinImage')
+    .grab$(helnweinImageSelection),
   )
   return result[0]
 }

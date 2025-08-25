@@ -1,16 +1,11 @@
 import React, {FunctionComponent} from 'react'
-import {getCategoryContext} from '@repo/sanity/categories'
-import ArticleList from '@repo/ui/article/ArticleList'
+import {getCategoryContext, getFilter} from '@repo/sanity/categories'
 import ImageGroupList from '@repo/ui/image-group/ImageGroupList'
-import QuoteList from '@repo/ui/quote/QuoteList'
-import QuoteHelnweinList from '@repo/ui/quote/QuoteHelnweinList'
-import FeedbackList from '@repo/ui/quote/FeedbackList'
-import BiographyList from '@repo/ui/article/BiographyList'
-import BibliographyList from '@repo/ui/article/BibliographyList'
 import {
   getArticleList,
   getBibliographyList,
-  getBiographyList, getFeedbackList,
+  getBiographyList,
+  getFeedbackList,
   getImageGroupList,
   getQuoteHelnweinList,
   getQuoteList,
@@ -22,8 +17,9 @@ import FeedbackPage from '@/app/[site]/[category]/[subcategory]/FeedbackPage'
 import BibliographyPage from '@/app/[site]/[category]/[subcategory]/BibliographyPage'
 import BiographyPage from '@/app/[site]/[category]/[subcategory]/BiographyPage'
 
-const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
+const SubCategoryPage: FunctionComponent<any> = async ({params, searchParams}) => {
   const categoryContext = getCategoryContext(params)
+  const filter = getFilter(categoryContext, (await searchParams).filter)
   const type = categoryContext.activeSubcategory?.type
 
   return (
@@ -52,7 +48,7 @@ const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
           <div>Texte, Rezensionen und Essays, über Gottfried Helnweins Arbeit für die Bühne. Theater, Ballet, Oper, Video und Film. Bühnenbild, Licht, Kostüme und Maske.</div>
         </div>
       )}
-      {type === 'articleDocument' && <ArticlePage context={categoryContext} data={await getArticleList(categoryContext)} />}
+      {type === 'articleDocument' && <ArticlePage context={categoryContext} data={await getArticleList(categoryContext, 0, filter)} />}
       {type === 'imageGroupDocument' && <ImageGroupList context={categoryContext} data={await getImageGroupList(categoryContext.activeSubcategory?.id!) }/>}
       {type === 'quoteDocument' && <QuotePage data={await getQuoteList()} />}
       {type === 'quoteHelnweinDocument' && <QuoteHelnweinPage data={await getQuoteHelnweinList()} />}

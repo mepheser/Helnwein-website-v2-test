@@ -26,6 +26,36 @@ export interface Subcategory {
   active?: boolean
   orderCustom: boolean
   language?: string
+  filterGroups?: FilterGroup[]
+}
+
+export interface FilterGroup {
+  filters?: Filter[]
+}
+
+export interface Filter {
+  id: string
+  label: string
+  clause: string
+}
+
+const createYearFilter = (max: number, min: number) => {
+  return ({
+      id: `year-${max}-${min}`,
+      label: `${max}-${min}`,
+      clause: `(orderDate >= '${min}-01-01T00:00:00Z' && orderDate <= '${max}-12-31T23:59:59Z')`,
+    })
+}
+
+const createYearFilters = (min: number) => {
+  const yearsArray = (minYear: number): number[] => {
+    const currentYear = new Date().getFullYear();
+    const count = Math.floor((currentYear - minYear) / 2) + 1;
+    return Array.from({ length: count }, (_, i) => currentYear - i * 2);
+  }
+
+  return yearsArray(min)
+    .map(year => createYearFilter(year, year - 1))
 }
 
 export const subcategories = [
@@ -34,6 +64,13 @@ export const subcategories = [
     title: 'News Update',
     type: 'articleDocument',
     orderCustom: false,
+    filterGroups: [{
+      filters: [
+        ...createYearFilters(1988),
+        createYearFilter(1987, 1980),
+        createYearFilter(1979, 1969),
+      ],
+    }]
   },
   {
     id: 'studio',
@@ -46,12 +83,25 @@ export const subcategories = [
     title: 'Exhibitions',
     type: 'articleDocument',
     orderCustom: false,
+    filterGroups: [{
+      filters: [
+        ...createYearFilters(1988),
+        createYearFilter(1987, 1980),
+        createYearFilter(1979, 1969),
+      ],
+    }]
   },
   {
     id: 'interviews',
     title: 'Interviews',
     type: 'articleDocument',
     orderCustom: true,
+    filterGroups: [{
+      filters: [
+        ...createYearFilters(1996),
+        createYearFilter(1996, 1975),
+      ],
+    }]
   },
   {
     id: 'quotes',
@@ -437,7 +487,7 @@ export const categories: Category[] = [
 ]
 
 export const getCategoryContext = ({site, category, subcategory}: any): CategoryContext => {
-  const foundSite = sites.find(value => value.language == site)
+  const foundSite = sites.find((value: any) => value.language == site)
   const foundCategory = categories.find(value => value.id == category && (!subcategory || value.subcategories.includes(subcategory)))
   const foundSubcategory = subcategories.find(value => value && value.id == subcategory)
 
@@ -454,12 +504,23 @@ export const getCategoryContext = ({site, category, subcategory}: any): Category
     })),
     submenu: foundCategory
       ? foundCategory.subcategories
-          .map(value => subcategories.find(value2 => value2 && value2.id === value))
-          .filter(value => value)
-          .map(value => ({
-            ...value!,
-            active: foundSubcategory && value?.id === foundSubcategory.id,
-          }))
+        .map(value => subcategories.find(value2 => value2 && value2.id === value))
+        .filter(value => value)
+        .map(value => ({
+          ...value!,
+          active: foundSubcategory && value?.id === foundSubcategory.id,
+        }))
       : [],
   }
+}
+
+export const getFilter = (context: CategoryContext, currentFilterId: string) => {
+  if (!context || !context.activeSubcategory || !context.activeSubcategory.filterGroups) {
+    return undefined
+  }
+
+  return context.activeSubcategory.filterGroups
+    .flatMap(group => group.filters)
+    .filter(filter => filter != null)
+    .find(filter => filter.id === currentFilterId)
 }

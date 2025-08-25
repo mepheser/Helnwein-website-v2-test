@@ -1,15 +1,41 @@
 import React, {FunctionComponent} from 'react'
 import Optional from '../Optional'
-import Image from 'next/image'
 import {ArticleListItem} from '@repo/sanity/selections'
 import ArticleListImage from '../image/ArticleListImage'
 import {CategoryContext} from '@repo/sanity/categories'
+import {format, isDate, Locale, parseISO} from 'date-fns'
+import { fr, enUS, de, it, ja, cs, ru, es } from "date-fns/locale"
 
-const Date: FunctionComponent<{displayDate?: string}> = ({displayDate}) => (
-  <Optional data={displayDate}>
-    <div className={'font-sans text-lg font-light uppercase tracking-widest text-gray'}>{displayDate}</div>
-  </Optional>
-)
+const locales: Record<string, Locale> = {
+  'en': enUS,
+  'de': de,
+  'fr': fr,
+  'es': es,
+  'ru': ru,
+  'ja': ja,
+  'it': it,
+  'cs': cs,
+};
+
+const Date: FunctionComponent<{displayDate?: string | Date, language: string}> = ({displayDate, language}) => {
+  let date: Date | undefined = undefined;
+
+  if (displayDate && isDate(displayDate)) {
+    date = displayDate
+  }
+
+  if (displayDate && displayDate instanceof String) {
+    date = parseISO(displayDate as string)
+  }
+
+  return (
+    <Optional data={displayDate}>
+      <div className={'font-sans text-lg font-light uppercase tracking-widest text-gray'}>
+        {date && format(date, 'P', {locale: locales[language] || enUS})}
+      </div>
+    </Optional>
+  )
+}
 
 const Source: FunctionComponent<{source?: string}> = ({source}) => (
   <Optional data={source}>
@@ -24,7 +50,7 @@ const Subtitle: FunctionComponent<{subtitle?: string}> = ({subtitle}) => <div
   className={'mb-1 mt-4 font-serif font-semibold'}>{subtitle}</div>
 
 const AbstractContent: FunctionComponent<{abstractContent?: string}> = ({abstractContent}) => <div
-  className={'font-serif'}>{abstractContent && abstractContent.substring(0, 200)}</div>
+  className={'font-serif'}>{abstractContent && abstractContent}</div>
 
 const Author: FunctionComponent<{author?: string}> = ({author}) => (
   <Optional data={author}>
@@ -49,7 +75,7 @@ const ArticleList: FunctionComponent<Props> = ({data, context}) => {
       {data.map((item, index) => (
         <a
           href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}
-          key={item._id} >
+          key={item._id}>
           <div
             key={item._id! + index + (context && context.activeCategory?.id) + (context && context.activeSubcategory?.id)}
             className={'max-w-3xl text-lg'}>
@@ -59,7 +85,7 @@ const ArticleList: FunctionComponent<Props> = ({data, context}) => {
               </div>
               <div className={'mb-4'}>
                 <div className={'flex gap-2'}>
-                  <Date displayDate={undefined} />
+                  <Date displayDate={item.displayDate || item.orderDate} language={context ? context.language : 'en'} />
                   <Source source={item.source} />
                 </div>
                 <Title title={item.title} />

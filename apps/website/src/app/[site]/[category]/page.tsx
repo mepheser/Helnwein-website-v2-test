@@ -21,8 +21,6 @@ const CategoryPage: FunctionComponent<any> = async ({params}) => {
   const categoryContext = getCategoryContext(params)
   const bgImage = bgImages(categoryContext.activeCategory?.id!)
 
-  console.log(categoryContext)
-
   return (
     <>
       <Submenu context={categoryContext} />

@@ -97,6 +97,7 @@ export const articleListSelection = {
   title: q.string().optional(),
   orderCustom: q.string().optional(),
   orderDate: q.date().optional(),
+  displayDate: q.date().optional(),
   subtitle: q.string().optional(),
   abstractContent: q.string().optional(),
   source: q.string().optional(),

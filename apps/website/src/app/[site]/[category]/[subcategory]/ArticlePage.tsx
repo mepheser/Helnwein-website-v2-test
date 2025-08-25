@@ -7,10 +7,11 @@ import ArticleList from '@repo/ui/article/ArticleList'
 
 interface Props {
   data: ArticleListItem[],
-  context?: CategoryContext
+  context?: CategoryContext,
+  filter?: string,
 }
 
-const ArticlePage: FunctionComponent<Props> = ({context, data}) => {
+const ArticlePage: FunctionComponent<Props> = ({context, data, filter}) => {
   const [list, setList] = useState(data)
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
@@ -24,7 +25,7 @@ const ArticlePage: FunctionComponent<Props> = ({context, data}) => {
 
     setLoading(true)
     try {
-      const response = await fetch(`/api/articles/${context.site}/${context.activeCategory!.id}/${context.activeSubcategory!.id}/${pageNum}`)
+      const response = await fetch(`/api/articles/${context.site}/${context.activeCategory!.id}/${context.activeSubcategory!.id}/${pageNum}?filter=`)
       const data = await response.json()
 
       setList((prev) => [...prev, ...data.data])

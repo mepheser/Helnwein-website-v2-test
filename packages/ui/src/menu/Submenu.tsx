@@ -1,8 +1,8 @@
 import React, {FunctionComponent} from 'react'
 import {CategoryContext} from '@repo/sanity/categories'
-import Link from 'next/link'
 import clsx from 'clsx'
 import {i18n} from '@repo/sanity/i18n'
+import SubmenuFilterItem from './SubmenuFilterItem'
 
 interface Props {
   context: CategoryContext
@@ -12,7 +12,7 @@ const Submenu: FunctionComponent<Props> = ({context}) => {
 
   return (
     <aside className={'w-60 min-w-[217px]'}>
-      <ul className={'flex flex-col gap-1 font-sans text-lg font-bold uppercase tracking-widest'}>
+      <ul className={'flex flex-col gap-1 font-sans text-lg font-bold uppercase tracking-widest mb-32'}>
         {context.submenu
           .filter(value => !value.language || value.language === context.language)
           .map(value => (
@@ -23,10 +23,33 @@ const Submenu: FunctionComponent<Props> = ({context}) => {
                 'text-white': context.activeSubcategory?.id === value.id,
               })}
             >
-              <a href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`}>{i18n(value.id, context.language)}</a>
+              <a
+                href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`}>{i18n(value.id, context.language)}</a>
             </li>
           ))}
       </ul>
+      {context.activeSubcategory && context.activeSubcategory.filterGroups && (
+        <>
+          {context.activeSubcategory.filterGroups
+            .map((value, index) => (
+              <ul className={'flex flex-col gap-1 font-sans text-xs font-bold uppercase tracking-widest mb-12'}
+                  key={`filter-${index}`}>
+                {value.filters!.map((value) => (
+                  <li
+                    key={value.id}
+                    className={clsx({
+                      'text-gray': context.activeSubcategory?.id !== value.id,
+                      'text-white': context.activeSubcategory?.id === value.id,
+                    })}
+                  >
+                    <SubmenuFilterItem context={context} filter={value} />
+                  </li>
+                ))}
+              </ul>
+            ))
+          }
+        </>
+      )}
     </aside>
   )
 }

@@ -1,9 +1,11 @@
 import React, {FunctionComponent} from 'react'
 import ArticleDetail from '@repo/ui/article/ArticleDetail'
 import {getArticleDetail, getBibliographyDetail, getBiographyDetail} from '@repo/sanity/queries'
+import {getCategoryContext} from '@repo/sanity/categories'
 
 const ArticleDetailPage: FunctionComponent<any> = async ({params}) => {
   const {subcategory, id} = await params
+  const categoryContext = getCategoryContext(params)
 
   let data;
 
@@ -16,7 +18,7 @@ const ArticleDetailPage: FunctionComponent<any> = async ({params}) => {
   }
 
 
-  return <ArticleDetail data={data} />
+  return <ArticleDetail data={data} context={categoryContext}/>
 }
 
 export default ArticleDetailPage

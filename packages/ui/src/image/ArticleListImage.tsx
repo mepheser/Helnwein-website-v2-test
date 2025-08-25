@@ -13,7 +13,7 @@ interface Props {
 
 const ArticleListImage: FunctionComponent<Props> = ({image, preload, className}) => {
     if (!image) {
-        return null
+        return <div className={'min-w-[150px]'}/>
     }
 
     return (

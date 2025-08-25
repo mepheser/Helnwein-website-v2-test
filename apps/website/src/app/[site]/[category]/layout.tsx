@@ -19,7 +19,6 @@ const CategoryLayout: FunctionComponent<Props> = ({children, params}) => {
 
   return (
     <div className={'p-4'}>
-      {/** {<AlternativeMainMenu context={categoryContext}/>}**/}
       <MainMenu context={categoryContext} />
       {children}
     </div>
