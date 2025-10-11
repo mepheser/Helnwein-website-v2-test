@@ -1,15 +1,21 @@
 import React, {FunctionComponent} from 'react'
+import sites from '@repo/sanity/sites'
+
+export async function generateStaticParams() {
+  return sites.map(value => ({
+    site: value.language
+  }))
+}
 
 interface Props {
   children: React.ReactNode
-  params: {
-    category: string
-    subcategory: string
-  }
+  params: Promise<{
+    site: string
+  }>
 }
 
-const CategoryLayout: FunctionComponent<Props> = ({children}) => {
+const SiteLayout: FunctionComponent<Props> = ({children}) => {
   return <>{children}</>
 }
 
-export default CategoryLayout
+export default SiteLayout

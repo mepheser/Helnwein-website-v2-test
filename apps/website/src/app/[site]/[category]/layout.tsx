@@ -1,12 +1,17 @@
 import React, {FunctionComponent} from 'react'
-import {getCategoryContext} from '@repo/sanity/categories'
+import {categories, getCategoryContext} from '@repo/sanity/categories'
 import MainMenu from '@repo/ui/menu/MainMenu'
+
+export async function generateStaticParams() {
+  return categories.map(category => ({
+    category: category.id
+  }))
+}
 
 interface Props {
   children: React.ReactNode
   params: Promise<{
     category: string
-    subcategory: string
   }>
 }
 
@@ -18,6 +23,7 @@ const CategoryLayout: FunctionComponent<Props> = ({children, params}) => {
   }
 
   return (
+
     <div className={'p-4'}>
       <MainMenu context={categoryContext} />
       {children}

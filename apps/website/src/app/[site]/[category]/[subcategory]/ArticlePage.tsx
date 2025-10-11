@@ -1,6 +1,6 @@
 'use client'
 
-import React, {FunctionComponent, useCallback, useEffect, useRef, useState} from 'react'
+import React, {FunctionComponent, Suspense, useCallback, useEffect, useRef, useState} from 'react'
 import {ArticleListItem} from '@repo/sanity/selections'
 import {CategoryContext} from '@repo/sanity/categories'
 import ArticleList from '@repo/ui/article/ArticleList'
@@ -60,13 +60,13 @@ const ArticlePage: FunctionComponent<Props> = ({context, data, filter}) => {
   }, [hasMore]);
 
   return (
-    <>
+    <Suspense fallback={''}>
       <ArticleList context={context} data={list} />
       <div ref={loadingElementRef} className="h-10" />
       {loading && hasMore && (
         <p className="mt-2 text-center text-gray-500">Loading…</p>
       )}
-    </>
+    </Suspense>
   )
 }
 

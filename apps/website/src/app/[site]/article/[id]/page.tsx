@@ -1,7 +1,22 @@
 import React, {FunctionComponent} from 'react'
 import ArticleDetail from '@repo/ui/article/ArticleDetail'
-import {getArticleDetail, getBibliographyDetail, getBiographyDetail} from '@repo/sanity/queries'
+import {
+  getArticleDetail,
+  getArticleIds,
+  getArticleList,
+  getBibliographyDetail,
+  getBiographyDetail,
+} from '@repo/sanity/queries'
 import {getCategoryContext} from '@repo/sanity/categories'
+
+export async function generateStaticParams({params}: any) {
+  const categoryContext = getCategoryContext(params)
+
+  const articleList = await getArticleIds(categoryContext.domain)
+
+  console.log('found articleList', articleList.length, categoryContext.site)
+  return articleList.map((article) => ({id: article._id}))
+}
 
 const ArticleDetailPage: FunctionComponent<any> = async ({params}) => {
   const {subcategory, id} = await params

@@ -14,6 +14,10 @@ interface Props {
 }
 
 export function getCroppedDimensions(image: HelnweinImage, baseDimensions: SanityImageDimensions): SanityImageDimensions {
+    if (!image || !image.image) {
+        return baseDimensions
+    }
+
     const crop: any = image.image.crop;
 
     if (!crop) {

@@ -70,6 +70,10 @@ interface Props {
 }
 
 const ArticleDetailHeader: FunctionComponent<Props> = ({data, context}) => {
+  if (!data) {
+    return null
+  }
+
   return (
     <>
       <div className={'max-w-3xl text-lg'}>

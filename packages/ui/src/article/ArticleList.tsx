@@ -74,7 +74,7 @@ const ArticleList: FunctionComponent<Props> = ({data, context}) => {
     <main className={'max-w-3xl'}>
       {data.map((item, index) => (
         <a
-          href={context ? `/${context.site}/${context.activeCategory?.id}/${context.activeSubcategory?.id!}/article/${item._id}` : '#'}
+          href={context ? `/${context.site}/article/${item._id}?context=${context.activeCategory?.id}/${context.activeSubcategory?.id!}` : '#'}
           key={item._id}>
           <div
             key={item._id! + index + (context && context.activeCategory?.id) + (context && context.activeSubcategory?.id)}

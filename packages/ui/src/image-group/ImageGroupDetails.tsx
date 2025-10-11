@@ -20,13 +20,15 @@ const ImageGroupDetails: FunctionComponent<Props> = ({selected}) => {
     <div className={'w-full border border-gray p-8'}>
       <div className={'flex flex-wrap gap-4'}>
         <Gallery options={{bgOpacity: 1}}>
-          {selected.images.map(value => (
+          {selected.images
+            .filter(value => value && value.image)
+            .map(value => (
             <Item
-              original={loader({src: imageUrl(value, Format.RAW)})}
-              thumbnail={loader({src: imageUrl(value, Format.GROUP_THUMBNAIL)})}
-              width={getImageDimensions(value.image.asset!).width}
-              height={getImageDimensions(value.image.asset!).height}
-              key={value._id}
+              original={loader({src: imageUrl(value!, Format.RAW)})}
+              thumbnail={loader({src: imageUrl(value!, Format.GROUP_THUMBNAIL)})}
+              width={getImageDimensions(value!.image!.asset!).width}
+              height={getImageDimensions(value!.image!.asset!).height}
+              key={value!._id}
             >
               {({ ref, open }: any) => (
                 <div onClick={open} ref={ref}>

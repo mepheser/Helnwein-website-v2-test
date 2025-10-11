@@ -1,6 +1,17 @@
-import React, {FunctionComponent} from 'react'
-import {getCategoryContext} from '@repo/sanity/categories'
+import React, {FunctionComponent, Suspense} from 'react'
+import {categories, getCategoryContext} from '@repo/sanity/categories'
 import Submenu from '@repo/ui/menu/Submenu'
+
+export async function generateStaticParams() {
+  return categories
+    .map(category => {
+      return category.subcategories.map(subcategory => ({
+        category: category.id,
+        subcategory
+      }))
+    })
+    .flatMap(list => list)
+}
 
 interface Props {
   children: React.ReactNode
@@ -19,10 +30,12 @@ const SubCategoryLayout: FunctionComponent<Props> = async ({children, params}) =
   }
 
   return (
-    <div className={'flex'}>
-      <Submenu context={categoryContext} />
-      {children}
-    </div>
+    <Suspense fallback={''}>
+      <div className={'flex'}>
+        <Submenu context={categoryContext} />
+        {children}
+      </div>
+    </Suspense>
   )
 }
 

@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 6700",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' next build",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit",
+    "serve": "serve out -l 3001",
     "prettier": "npx prettier src/ --write"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
     "tailwindcss": "^4",
+    "serve": "^14.2.5",
     "typescript": "^5"
   }
 }

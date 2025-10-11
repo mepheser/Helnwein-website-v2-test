@@ -9,7 +9,6 @@ import Image from 'next/image'
 import {CategoryContext} from '@repo/sanity/categories'
 import {default as SwiperCore} from 'swiper'
 import {Autoplay, EffectFade} from 'swiper/modules'
-import Link from 'next/link'
 import {createImageLoader, Format, imageUrl} from "../image/imateUtils";
 
 SwiperCore.use([Autoplay, EffectFade])
@@ -34,11 +33,13 @@ const Slideshow: FunctionComponent<Props> = ({images, categoryContext}) => {
       }}
       speed={1200}
     >
-      {images.map(image => (
-        <SwiperSlide key={image.image._id}>
+      {images
+        .filter((image) => image && image.image)
+        .map(image => (
+        <SwiperSlide key={image.image!._id}>
           <a href={`/${categoryContext.site}/news/news_update`} >
             <div className="relative h-screen w-screen">
-              <Image src={imageUrl(image.image, Format.RAW)} loader={createImageLoader()} fill={true} alt={image.image.name || 'Helnwein'} className={'object-cover'} />
+              <Image src={imageUrl(image.image!, Format.RAW)} loader={createImageLoader()} fill={true} alt={image.image!.name || 'Helnwein'} className={'object-cover'} />
               <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
           </a>

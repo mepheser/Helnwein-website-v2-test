@@ -1,6 +1,7 @@
 import {q, TypeFromSelection} from 'groqd'
 import {runQuery} from './liveClient'
 import {
+  articleIdSelection,
   articleListSelection,
   articleSelection,
   feedbackSelection,
@@ -11,8 +12,15 @@ import {
   quoteSelection,
 } from './selections'
 import {CategoryContext, Filter} from './categories'
+import {Site} from './sites'
 
-const pageSize = 10
+const pageSize = 100
+
+export const getArticleIds = async (domain: string): Promise<TypeFromSelection<typeof articleIdSelection>[]> => {
+  const query = q(`*['${domain}' in domains]`, {isArray: true})
+    .grab$(articleIdSelection)
+  return await runQuery(query)
+}
 
 export const getArticleList = async (context: CategoryContext, page = 0, filter?: Filter): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
   const filterQuery = filter ? `&& ${filter.clause}` : ''

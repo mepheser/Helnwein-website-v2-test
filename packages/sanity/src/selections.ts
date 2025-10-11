@@ -43,14 +43,14 @@ export const helnweinImageSelection = {
   width: q.string().optional(),
   height: q.string().optional(),
   name: q.string().optional(),
-  image: q('image').grab$(sanityImageSelection),
+  image: q('image').grab$(sanityImageSelection).nullable(),
   takenat: q.date().optional()
 } satisfies Selection
 
 export const introImageSelection = {
   color1: q.unknown(),
   color2: q.unknown(),
-  image: q('image').deref().grab$(helnweinImageSelection),
+  image: q('image').deref().grab$(helnweinImageSelection).nullable(),
 } satisfies Selection
 
 const articleImageSelection = {
@@ -106,6 +106,10 @@ export const articleListSelection = {
   authorDescription: q.string().optional(),
   previewImageId: ['image -> externalId', q.string().optional()],
   image: q('image').deref().grab$(helnweinImageSelection).nullable(),
+} satisfies Selection
+
+export const articleIdSelection = {
+  _id: q.string(),
 } satisfies Selection
 
 export const imageGroupListSelection = {

@@ -9,6 +9,10 @@ interface Props {
 }
 
 const ArticleDetail: FunctionComponent<Props> = async ({data, context}) => {
+  if (!data) {
+    return null
+  }
+
   return (
     <div>
       <ArticleDetailHeader data={data} context={context}/>

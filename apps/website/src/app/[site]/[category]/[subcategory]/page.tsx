@@ -17,9 +17,9 @@ import FeedbackPage from '@/app/[site]/[category]/[subcategory]/FeedbackPage'
 import BibliographyPage from '@/app/[site]/[category]/[subcategory]/BibliographyPage'
 import BiographyPage from '@/app/[site]/[category]/[subcategory]/BiographyPage'
 
-const SubCategoryPage: FunctionComponent<any> = async ({params, searchParams}) => {
+const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
   const categoryContext = getCategoryContext(params)
-  const filter = getFilter(categoryContext, (await searchParams).filter)
+  const filter = undefined // getFilter(categoryContext, (await searchParams).filter)
   const type = categoryContext.activeSubcategory?.type
 
   return (

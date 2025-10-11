@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react'
-import {PortableText} from 'next-sanity'
+import {PortableText} from '@portabletext/react'
 import ContentImage from '../image/ContentImage'
 import Link from "next/link";
 
