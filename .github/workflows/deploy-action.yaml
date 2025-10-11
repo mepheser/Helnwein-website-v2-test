@@ -10,7 +10,7 @@ jobs:
       SFTP_USER: ${{ secrets.BUNNY_SFTP_USER }}
       SFTP_PASS: ${{ secrets.BUNNY_SFTP_PASSWORD }}
       RELEASE_ID: ${{ github.sha }}
-      BUILD_DIR: out
+      BUILD_DIR: apps/website/out
       REMOTE_BASE: /deployments
     runs-on: ubuntu-latest
     steps:
