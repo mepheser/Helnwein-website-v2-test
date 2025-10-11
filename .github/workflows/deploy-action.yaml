@@ -1,0 +1,53 @@
+name: CI
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    env:
+      SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
+      SFTP_HOST: ${{ secrets.BUNNY_SFTP_HOST }}
+      SFTP_USER: ${{ secrets.BUNNY_SFTP_USER }}
+      SFTP_PASS: ${{ secrets.BUNNY_SFTP_PASSWORD }}
+      RELEASE_ID: ${{ github.sha }}
+      BUILD_DIR: out
+      REMOTE_BASE: /deployments
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --prefix apps/website
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+      - name: Upload via SFTP to Bunny Storage (skip if exists)
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${REMOTE_BASE}/${RELEASE_ID}"
+
+          echo "Checking if ${REMOTE_DIR} exists..."
+          EXISTS=$(lftp -u "${SFTP_USER},${SFTP_PASS}" \
+            -e "set sftp:auto-confirm yes; cls -1 ${REMOTE_DIR}; bye" \
+            -p 22 sftp://${SFTP_HOST} || true)
+
+          if [ -n "${EXISTS}" ]; then
+            echo "✅ ${REMOTE_DIR} already exists; skipping upload."
+            exit 0
+          fi
+
+          echo "⬆️ Uploading ${BUILD_DIR} → ${REMOTE_DIR}"
+          lftp -u "${SFTP_USER},${SFTP_PASS}" -p 22 sftp://${SFTP_HOST} -e "
+            set net:timeout 20
+            set net:max-retries 3
+            set net:reconnect-interval-base 5
+            set sftp:auto-confirm yes
+            mirror --reverse --continue --only-newer --parallel=6 \
+              ${BUILD_DIR} ${REMOTE_DIR}
+            bye
+          "    
+           echo "⬆️ Uploading ${BUILD_DIR} → ${REMOTE_DIR}: Success!"
