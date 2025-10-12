@@ -28,6 +28,7 @@ jobs:
           directory-to-upload: apps/website/out
           storage-endpoint: https://storage.bunnycdn.com
           storage-zone-name: helnwein-test
+          target-directory: deployments/${{ github.sha }}
           concurrency: "30"               # see API limits below
           # optional clean + purge:
           # access-key: ${{ secrets.BUNNY_ACCESS_KEY }}
