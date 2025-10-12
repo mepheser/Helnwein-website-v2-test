@@ -21,33 +21,16 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build --prefix apps/website
-      - name: Install lftp
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lftp
-      - name: Upload via SFTP to Bunny Storage (skip if exists)
-        run: |
-          set -euo pipefail
-          REMOTE_DIR="${REMOTE_BASE}/${RELEASE_ID}"
-
-          echo "Checking if ${REMOTE_DIR} exists..."
-          EXISTS=$(lftp -u "${SFTP_USER},${SFTP_PASS}" \
-            -e "set sftp:auto-confirm yes; cls -1 ${REMOTE_DIR}; bye" \
-            -p 22 sftp://${SFTP_HOST} || true)
-
-          if [ -n "${EXISTS}" ]; then
-            echo "✅ ${REMOTE_DIR} already exists; skipping upload."
-            exit 0
-          fi
-
-          echo "⬆️ Uploading ${BUILD_DIR} → ${REMOTE_DIR}"
-          lftp -u "${SFTP_USER},${SFTP_PASS}" -p 22 sftp://${SFTP_HOST} -e "
-            set net:timeout 20
-            set net:max-retries 3
-            set net:reconnect-interval-base 5
-            set sftp:auto-confirm yes
-            mirror --reverse --continue --only-newer --parallel=6 \
-              ${BUILD_DIR} ${REMOTE_DIR}
-            bye
-          "    
-           echo "⬆️ Uploading ${BUILD_DIR} → ${REMOTE_DIR}: Success!"
+      - name: Deploy to Bunny
+        uses: R-J-dev/bunny-deploy@v2.0.6
+        with:
+          storage-zone-password: ${{ secrets.BUNNY_SFTP_PASSWORD }}
+          directory-to-upload: apps/website/out
+          storage-endpoint: https://storage.bunnycdn.com
+          storage-zone-name: helnwein-test
+          concurrency: "30"               # see API limits below
+          # optional clean + purge:
+          # access-key: ${{ secrets.BUNNY_ACCESS_KEY }}
+          # enable-delete-action: true
+          # enable-purge-pull-zone: true
+          # pull-zone-id: "12345"
