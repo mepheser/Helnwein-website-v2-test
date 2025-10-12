@@ -16,8 +16,9 @@ import {Site} from './sites'
 
 const pageSize = 100
 
-export const getArticleIds = async (domain: string): Promise<TypeFromSelection<typeof articleIdSelection>[]> => {
-  const query = q(`*['${domain}' in domains]`, {isArray: true})
+export const getArticleIds = async (): Promise<TypeFromSelection<typeof articleIdSelection>[]> => {
+  const query = q(`*[]`, {isArray: true})
+    .filterByType('articleDocument')
     .grab$(articleIdSelection)
   return await runQuery(query)
 }

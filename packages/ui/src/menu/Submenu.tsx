@@ -3,6 +3,7 @@ import {CategoryContext} from '@repo/sanity/categories'
 import clsx from 'clsx'
 import {i18n} from '@repo/sanity/i18n'
 import SubmenuFilterItem from './SubmenuFilterItem'
+import Link from 'next/link'
 
 interface Props {
   context: CategoryContext
@@ -23,8 +24,8 @@ const Submenu: FunctionComponent<Props> = ({context}) => {
                 'text-white': context.activeSubcategory?.id === value.id,
               })}
             >
-              <a
-                href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`}>{i18n(value.id, context.language)}</a>
+              <Link
+                href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`}>{i18n(value.id, context.language)}</Link>
             </li>
           ))}
       </ul>

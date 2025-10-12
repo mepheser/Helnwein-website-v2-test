@@ -8,6 +8,10 @@ export async function generateStaticParams() {
 }
 
 const ArticleDetailPage: FunctionComponent<any> = async ({params}) => {
+  if (true) {
+    return null
+  }
+
   const context = getCategoryContext(params)
   const data = await getImageGroupList(context.activeSubcategory?.id!)
   return <ImageGroupList context={context} selected={params.id} data={data} />

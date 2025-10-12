@@ -5,6 +5,7 @@ import ArticleListImage from '../image/ArticleListImage'
 import {CategoryContext} from '@repo/sanity/categories'
 import {format, isDate, Locale, parseISO} from 'date-fns'
 import { fr, enUS, de, it, ja, cs, ru, es } from "date-fns/locale"
+import Link from 'next/link'
 
 const locales: Record<string, Locale> = {
   'en': enUS,
@@ -73,8 +74,8 @@ const ArticleList: FunctionComponent<Props> = ({data, context}) => {
   return (
     <main className={'max-w-3xl'}>
       {data.map((item, index) => (
-        <a
-          href={context ? `/${context.site}/article/${item._id}?context=${context.activeCategory?.id}/${context.activeSubcategory?.id!}` : '#'}
+        <Link
+          href={context ? `/article/${item._id}?site=${context.site}&category=${context.activeCategory!.id}&subcategory=${context.activeSubcategory?.id!}` : '#'}
           key={item._id}>
           <div
             key={item._id! + index + (context && context.activeCategory?.id) + (context && context.activeSubcategory?.id)}
@@ -97,7 +98,7 @@ const ArticleList: FunctionComponent<Props> = ({data, context}) => {
             </div>
             <hr className={'my-10 text-white opacity-100'} />
           </div>
-        </a>
+        </Link>
       ))}
     </main>
   )
