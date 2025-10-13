@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": "PROFILE=dev deno run --watch --allow-net --allow-env src/apiProxy.ts",
+    "build": "PROFILE=ci deno bundle --platform=browser --minify -o dist/apiProxy.bundle.js src/apiProxy.ts"
+  },
+  "imports": {
+    "@sanity/client": "https://esm.sh/@sanity/client@7.12.0",
+    "@sanity/image-url": "https://esm.sh/@sanity/image-url@1.2.0",
+    "@bunny.net/edgescript-sdk": "https://esm.sh/@bunny.net/edgescript-sdk@0.10.0"
+  }
+}

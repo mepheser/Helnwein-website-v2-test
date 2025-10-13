@@ -13,7 +13,7 @@ export enum Format {
 }
 
 export const createImageLoader = () => ({src}: {src: string}) =>
-    `https://helnwein-website-images.b-cdn.net/images${src}`
+    `/images${src}`
 
 const getTime = (date: Date | string) => {
     if (date instanceof Date) {

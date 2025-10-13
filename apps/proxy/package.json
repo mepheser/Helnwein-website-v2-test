@@ -1,0 +1,10 @@
+{
+  "name": "helnwein-bunny-proxy",
+  "version": "*",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "deno task dev",
+    "build": "deno task build"
+  }
+}
