@@ -12,7 +12,6 @@ export async function generateStaticParams() {
           .filter(filterGroup => filterGroup.filters && filterGroup.filters.length > 0)
           .map((filterGroup: FilterGroup) => {
             return filterGroup.filters?.map(filter => ({
-              site: 'en',
               category: category.id,
               subcategory: subcategoryId,
               filter: filter.id
@@ -21,7 +20,6 @@ export async function generateStaticParams() {
           }) : []
 
         return [{
-          site: 'en',
           category: category.id,
           subcategory: subcategoryId,
           filter: 'all'

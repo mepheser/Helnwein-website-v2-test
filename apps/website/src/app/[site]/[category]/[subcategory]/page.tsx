@@ -7,7 +7,6 @@ export async function generateStaticParams() {
     .map(category => {
       return category.subcategories.map(subcategoryId => {
         return {
-          site: 'en',
           category: category.id,
           subcategory: subcategoryId,
         }
