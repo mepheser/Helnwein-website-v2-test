@@ -1,15 +1,16 @@
 import React, {FunctionComponent} from 'react'
-import {CategoryContext} from '@repo/sanity/categories'
+import {CategoryContext, Filter} from '@repo/sanity/categories'
 import clsx from 'clsx'
 import {i18n} from '@repo/sanity/i18n'
 import SubmenuFilterItem from './SubmenuFilterItem'
 import Link from 'next/link'
 
 interface Props {
-  context: CategoryContext
+  context: CategoryContext,
+  filter?: Filter
 }
 
-const Submenu: FunctionComponent<Props> = ({context}) => {
+const Submenu: FunctionComponent<Props> = ({context, filter}) => {
 
   return (
     <aside className={'w-60 min-w-[217px]'}>
@@ -33,14 +34,14 @@ const Submenu: FunctionComponent<Props> = ({context}) => {
         <>
           {context.activeSubcategory.filterGroups
             .map((value, index) => (
-              <ul className={'flex flex-col gap-1 font-sans text-xs font-bold uppercase tracking-widest mb-12'}
+              <ul className={'flex flex-col gap-1 font-sans text-xs font-bold  tracking-widest mb-6 max-w-36'}
                   key={`filter-${index}`}>
                 {value.filters!.map((value) => (
                   <li
                     key={value.id}
                     className={clsx({
-                      'text-gray': context.activeSubcategory?.id !== value.id,
-                      'text-white': context.activeSubcategory?.id === value.id,
+                      'text-gray': !filter || filter.id !== value.id,
+                      'text-white': filter && filter.id === value.id,
                     })}
                   >
                     <SubmenuFilterItem context={context} filter={value} />

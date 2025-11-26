@@ -24,11 +24,12 @@ export const getArticleIds = async (): Promise<TypeFromSelection<typeof articleI
 }
 
 export const getArticleList = async (context: CategoryContext, page = 0, filter?: Filter): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  const filterQuery = filter ? `&& ${filter.clause}` : ''
+  const filterQuery = filter && filter.clause ? `&& ${filter.clause}` : ''
+  const orderCustom = filter ? filter.orderCustom : context.activeSubcategory?.orderCustom
 
   const query = q(`*['${context.activeSubcategory?.id}' in categories && '${context.domain}' in domains ${filterQuery}]`, {isArray: true})
       .grab$(articleListSelection)
-      .order(...(context.activeSubcategory?.orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
+      .order(...(orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
       .slice(page * pageSize, page * pageSize + pageSize - 1)
 
   return await runQuery(query)
@@ -85,19 +86,23 @@ export const getImageGroupList = async (category: string): Promise<TypeFromSelec
   return await runQuery(q(`*['${category}' in categories]`, {isArray: true}).filterByType('imageGroupDocument').order('orderDate desc').grab$(imageGroupListSelection).slice(0, 100))
 }
 
-export const getBiographyList = async (page = 0): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true})
+export const getBiographyList = async (page = 0, filter?: Filter): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
+  const filterQuery = filter && filter.clause ? `${filter.clause}` : ''
+  const orderCustom = filter ? filter.orderCustom : true
+
+  return await runQuery(q(`*[${filterQuery}]`, {isArray: true})
     .filterByType('biographyDocument')
-    .order('orderCustom asc', 'orderDate desc')
-    .slice(page * pageSize, page * pageSize + pageSize - 1)
+    .order(...(orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
     .grab$(articleListSelection))
 }
 
-export const getBibliographyList = async (page = 0): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
-  return await runQuery(q(`*[]`, {isArray: true})
+export const getBibliographyList = async (page = 0, filter?: Filter): Promise<TypeFromSelection<typeof articleListSelection>[]> => {
+  const filterQuery = filter && filter.clause ? `${filter.clause}` : ''
+  const orderCustom = filter ? filter.orderCustom : true
+
+  return await runQuery(q(`*[${filterQuery}]`, {isArray: true})
     .filterByType('bibliographyDocument')
-    .order('orderCustom asc', 'orderDate desc')
-    .slice(page * 100, page * pageSize + 100 - 1)
+    .order(...(orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
     .grab$(articleListSelection))
 }
 

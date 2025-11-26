@@ -11,7 +11,15 @@ const nextConfig: NextConfig = {
               hostname: 'cdn.sanity.io',
           },
       ]
-  }
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/images/:path*",
+        destination: "http://localhost:6701/images/:path*",
+      },
+    ]
+  },
 };
 
 export default nextConfig;

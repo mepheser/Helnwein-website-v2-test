@@ -36,26 +36,35 @@ export interface FilterGroup {
 export interface Filter {
   id: string
   label: string
-  clause: string
+  clause?: string,
+  orderCustom?: boolean
+}
+
+const createFilter = (id: string, label: string, clause?: string, orderCustom?: boolean) => {
+  return ({
+      id,
+      label,
+      clause,
+      orderCustom: orderCustom
+    })
 }
 
 const createYearFilter = (max: number, min: number) => {
   return ({
-      id: `year-${max}-${min}`,
-      label: `${max}-${min}`,
-      clause: `(orderDate >= '${min}-01-01T00:00:00Z' && orderDate <= '${max}-12-31T23:59:59Z')`,
-    })
+    id: `year-${max}-${min}`,
+    label: `${max}-${min}`,
+    clause: `(orderDate >= '${min}-01-01T00:00:00Z' && orderDate <= '${max}-12-31T23:59:59Z')`,
+  })
 }
 
 const createYearFilters = (min: number) => {
-  const yearsArray = (minYear: number): number[] => {
     const currentYear = new Date().getFullYear();
-    const count = Math.floor((currentYear - minYear) / 2) + 1;
-    return Array.from({ length: count }, (_, i) => currentYear - i * 2);
-  }
-
-  return yearsArray(min)
-    .map(year => createYearFilter(year, year - 1))
+    const count = currentYear - min;
+    return Array.from({ length: count }, (_, i) => {
+      const endYear = currentYear - i;
+      const startYear = endYear - 1;
+      return createYearFilter(endYear, startYear);
+    });
 }
 
 export const subcategories = [
@@ -98,6 +107,11 @@ export const subcategories = [
     orderCustom: true,
     filterGroups: [{
       filters: [
+        createFilter('all', 'by relevance', undefined, true),
+        createFilter('interviews-chronologically', 'chronologically', undefined, false),
+      ],
+    }, {
+      filters: [
         ...createYearFilters(1996),
         createYearFilter(1996, 1975),
       ],
@@ -126,12 +140,54 @@ export const subcategories = [
     title: 'Biography',
     type: 'biographyDocument',
     orderCustom: true,
+    filterGroups: [{
+      filters: [
+        createFilter('all', 'Chronology', undefined, false),
+        createFilter('biography-ireland-usa', `Ireland and USA ${new Date().getFullYear()}-1997`, `(orderDate >= '1977-01-01T00:00:00Z' && orderDate <= '${new Date().getFullYear()}-12-31T23:59:59Z')`, false),
+        createFilter('biography-germany', `Germany 1997-1985`, `(orderDate >= '1985-01-01T00:00:00Z' && orderDate <= '1997-12-31T23:59:59Z')`, false),
+        createFilter('biography-austria', `Austria 1984-1948`, `(orderDate >= '1948-01-01T00:00:00Z' && orderDate <= '1984-12-31T23:59:59Z')`, false),
+      ],
+    }, {
+      filters: [
+        ...createYearFilters(1996),
+        createYearFilter(1996, 1975),
+      ],
+    }]
   },
+
   {
     id: 'bibliography',
     title: 'Bibliography',
     type: 'bibliographyDocument',
     orderCustom: true,
+    filterGroups: [{
+      filters: [
+        createFilter('all', 'Overview', undefined, true),
+        createFilter('bibliography-relevance', 'by relevance', undefined, true),
+        createFilter('bibliography-chronologically', 'chronologically', undefined, false),
+      ],
+    }, {
+      filters: [
+        createFilter('bibliography-monographs', 'Monographs', undefined, true),
+        createFilter('bibliography-catalogs', 'Catalogs one man shows', undefined, false),
+        createFilter('bibliography-interviews', 'Interviews', undefined, false),
+        createFilter('bibliography-art-history', 'Art-history', undefined, false),
+        createFilter('bibliography-photography', 'Photography', undefined, false),
+        createFilter('bibliography-comic', 'Comic related', undefined, false),
+        createFilter('bibliography-scholarly', 'Scholarly', undefined, false),
+        createFilter('bibliography-theatre', 'Theatre, opera', undefined, false),
+        createFilter('bibliography-texts-helnwein', 'Text by Helnwein', undefined, false),
+        createFilter('bibliography-quoting-helnwein', 'Books quoting Helnwein', undefined, false),
+        createFilter('bibliography-magazine-covers', 'Magazine Covers', undefined, false),
+        createFilter('bibliography-posters', 'Posters', undefined, false),
+        createFilter('bibliography-cd-covers', 'CD Covers', undefined, false),
+      ],
+    }, {
+      filters: [
+        ...createYearFilters(1996),
+        createYearFilter(1996, 1975),
+      ],
+    }]
   },
   {
     id: 'museums',
@@ -486,7 +542,7 @@ export const categories: Category[] = [
   },
 ]
 
-export const getCategoryContext = ({site, category, subcategory}: any): CategoryContext => {
+export const getCategoryContext = ({site, category, subcategory, filter}: any): CategoryContext => {
   const foundSite = sites.find((value: any) => value.language == site)
   const foundCategory = categories.find(value => value.id == category && (!subcategory || value.subcategories.includes(subcategory)))
   const foundSubcategory = subcategories.find(value => value && value.id == subcategory)
@@ -512,6 +568,10 @@ export const getCategoryContext = ({site, category, subcategory}: any): Category
         }))
       : [],
   }
+}
+
+export const getSubcategory = (csubcategoryId: string) => {
+  return subcategories.find(value => value && value.id == csubcategoryId)
 }
 
 export const getFilter = (context: CategoryContext, currentFilterId: string) => {

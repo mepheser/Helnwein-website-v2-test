@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "PROFILE=dev deno run --watch --allow-net --allow-env src/apiProxy.ts",
+    "dev": "PROFILE=dev deno run --watch --allow-net --allow-env --env-file src/apiProxy.ts",
     "build": "PROFILE=ci deno bundle --platform=browser --minify -o dist/apiProxy.bundle.js src/apiProxy.ts"
   },
   "imports": {

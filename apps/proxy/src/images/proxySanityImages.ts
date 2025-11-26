@@ -6,6 +6,7 @@ const client  = createClient({
   dataset: 'test',
   apiVersion: '2023-06-20',
   useCdn: true,
+  token: 'skps2PP66cLtg9PHCmLMxO0ik1st3BKwDYdtulOtWkUzKxrLStgOmPTKHKyzA0tEkj869mtJc6Y6LZDXSp41DF0waFIKaXw3g1BUgGFbOmSyA2fhdDIFo8qVGZAXaLj0P9CVfe4JKoYsDre5K343xPag0v8qfm0uLaUF9cyQ4BtXPv04OT4i',
 });
 
 enum Format {

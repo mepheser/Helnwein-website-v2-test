@@ -7,6 +7,7 @@ const staticClient =  createClient({
     apiVersion: '2023-06-20',
     useCdn: false,
     perspective: 'published',
+    token: process.env.SANITY_TOKEN,
 })
 
 
