@@ -6,6 +6,7 @@ jobs:
   build:
     env:
       SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
+      SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
       SFTP_HOST: ${{ secrets.BUNNY_SFTP_HOST }}
       SFTP_USER: ${{ secrets.BUNNY_SFTP_USER }}
       SFTP_PASS: ${{ secrets.BUNNY_SFTP_PASSWORD }}
