@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react'
-import {categories, getCategoryContext, getFilter} from '@repo/sanity/categories'
+import {getCategoryContext, getFilter} from '@repo/sanity/categories'
 import ImageGroupList from '@repo/ui/image-group/ImageGroupList'
 import {
   getArticleList,
@@ -10,44 +10,16 @@ import {
   getQuoteHelnweinList,
   getQuoteList,
 } from '@repo/sanity/queries'
-import ArticlePage from '@/app/[site]/[category]/[subcategory]/ArticlePage'
-import QuotePage from '@/app/[site]/[category]/[subcategory]/QuotePage'
-import QuoteHelnweinPage from '@/app/[site]/[category]/[subcategory]/QuoteHelnweinPage'
-import FeedbackPage from '@/app/[site]/[category]/[subcategory]/FeedbackPage'
-import BibliographyPage from '@/app/[site]/[category]/[subcategory]/BibliographyPage'
-import BiographyPage from '@/app/[site]/[category]/[subcategory]/BiographyPage'
-
-export async function generateStaticParams({params}: any) {
-  return categories
-    .map(category => {
-      return category.subcategories.map(subcategory => {
-        const context = getCategoryContext({
-          site: params.site,
-          category,
-          subcategory,
-        })
-
-        if (!context.activeSubcategory!.filterGroups) {
-          return [[]]
-        }
-
-        return context.activeSubcategory!.filterGroups!.map(group => {
-          return group.filters!.map(filter => ({
-            category: category.id,
-            subcategory,
-            filter: filter.id
-          }))
-        })
-      })
-    })
-    .flatMap(list => list)
-    .flatMap(list => list)
-    .flatMap(list => list)
-}
+import ArticleList from '@repo/ui/article/ArticleList'
+import QuoteList from '@repo/ui/quote/QuoteList'
+import QuoteHelnweinList from '@repo/ui/quote/QuoteHelnweinList'
+import FeedbackList from '@repo/ui/quote/FeedbackList'
+import BiographyList from '@repo/ui/article/BiographyList'
+import BibliographyList from '@repo/ui/article/BibliographyList'
 
 const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
   const categoryContext = getCategoryContext(params)
-  const filter = getFilter(categoryContext, params.filter)
+  const filter = getFilter(categoryContext, (await params).filter)
   const type = categoryContext.activeSubcategory?.type
 
   return (
@@ -76,13 +48,14 @@ const SubCategoryPage: FunctionComponent<any> = async ({params}) => {
           <div>Texte, Rezensionen und Essays, über Gottfried Helnweins Arbeit für die Bühne. Theater, Ballet, Oper, Video und Film. Bühnenbild, Licht, Kostüme und Maske.</div>
         </div>
       )}
-      {type === 'articleDocument' && <ArticlePage context={categoryContext} data={await getArticleList(categoryContext, 0, filter)} />}
+      {type === 'articleDocument' && <ArticleList context={categoryContext} data={await getArticleList(categoryContext, 0, filter)} />}
       {type === 'imageGroupDocument' && <ImageGroupList context={categoryContext} data={await getImageGroupList(categoryContext.activeSubcategory?.id!) }/>}
-      {type === 'quoteDocument' && <QuotePage data={await getQuoteList()} />}
-      {type === 'quoteHelnweinDocument' && <QuoteHelnweinPage data={await getQuoteHelnweinList()} />}
-      {type === 'feedbackDocument' && <FeedbackPage data={await getFeedbackList()} />}
-      {type === 'biographyDocument' && <BiographyPage data={await getBiographyList()} />}
-      {type === 'bibliographyDocument' && <BibliographyPage data={await getBibliographyList()} />}
+      {type === 'quoteDocument' && <QuoteList data={await getQuoteList()} />}
+      {type === 'quoteHelnweinDocument' && <QuoteHelnweinList data={await getQuoteHelnweinList()} />}
+      {type === 'feedbackDocument' && <FeedbackList data={await getFeedbackList()} />}
+      {type === 'biographyDocument' && <BiographyList data={await getBiographyList(0, filter)} />}
+      {type === 'bibliographyDocument' && (filter && filter.id === 'all') && <BibliographyList data={await getBibliographyList(0, filter)} />}
+      {type === 'bibliographyDocument' && (!filter || filter.id !== 'all') && <ArticleList data={await getBibliographyList(0, filter)} />}
     </div>
   )
 }
