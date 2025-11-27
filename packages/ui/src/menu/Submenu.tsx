@@ -26,7 +26,7 @@ const Submenu: FunctionComponent<Props> = ({context, filter}) => {
               })}
             >
               <Link
-                href={`/${context.site}/${context.activeCategory?.id}/${value.id}/`}>{i18n(value.id, context.language)}</Link>
+                href={`/${context.site}/${context.activeCategory?.id}/${value.id}/all`}>{i18n(value.id, context.language)}</Link>
             </li>
           ))}
       </ul>

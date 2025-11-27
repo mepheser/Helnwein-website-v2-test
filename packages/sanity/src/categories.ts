@@ -67,6 +67,43 @@ const createYearFilters = (min: number) => {
     });
 }
 
+/**
+ *
+ * Monographs
+ * Catalogs one man shows
+ * Catalogs group shows
+ * Interviews
+ * Art-history
+ * Photography
+ * Comic related
+ * Scholarly
+ * Theatre, opera
+ * Text by Helnwein
+ * Books quoting Helnwein
+ * Book covers
+ * Magazine Covers
+ * Posters
+ * CD Covers
+ */
+
+const bibliographyTags =  [
+  {title: 'Monographs', value: 'Monographs'},
+  {title: 'Catalogs-one-man-shows', value: 'Catalogs one man shows'},
+  {title: 'Catalogs-group-shows', value: 'Catalogs group shows'},
+  {title: 'Interviews', value: 'Interviews'},
+  {title: 'Art-history', value: 'Art-history'},
+  {title: 'Photography', value: 'Photography'},
+  {title: 'Comic-related', value: 'Comic related'},
+  {title: 'Scholarly', value: 'Scholarly'},
+  {title: 'Theatre-opera', value: 'Theatre, opera'},
+  {title: 'Text-by-Helnwein', value: 'Text by Helnwein'},
+  {title: 'Book-covers', value: 'Book covers'},
+  {title: 'Magazine-Covers', value: 'Magazine Covers'},
+  {title: 'Posters', value: 'Posters'},
+  {title: 'CD-Covers', value: 'CD Covers'},
+  {title: 'Books-quoting-Helnwein', value: 'Books quoting Helnwein'},
+]
+
 export const subcategories = [
   {
     id: 'news_update',
@@ -167,21 +204,7 @@ export const subcategories = [
         createFilter('bibliography-chronologically', 'chronologically', undefined, false),
       ],
     }, {
-      filters: [
-        createFilter('bibliography-monographs', 'Monographs', undefined, true),
-        createFilter('bibliography-catalogs', 'Catalogs one man shows', undefined, false),
-        createFilter('bibliography-interviews', 'Interviews', undefined, false),
-        createFilter('bibliography-art-history', 'Art-history', undefined, false),
-        createFilter('bibliography-photography', 'Photography', undefined, false),
-        createFilter('bibliography-comic', 'Comic related', undefined, false),
-        createFilter('bibliography-scholarly', 'Scholarly', undefined, false),
-        createFilter('bibliography-theatre', 'Theatre, opera', undefined, false),
-        createFilter('bibliography-texts-helnwein', 'Text by Helnwein', undefined, false),
-        createFilter('bibliography-quoting-helnwein', 'Books quoting Helnwein', undefined, false),
-        createFilter('bibliography-magazine-covers', 'Magazine Covers', undefined, false),
-        createFilter('bibliography-posters', 'Posters', undefined, false),
-        createFilter('bibliography-cd-covers', 'CD Covers', undefined, false),
-      ],
+      filters: bibliographyTags.map(tag => createFilter(tag.title, tag.value, `'${tag.value}' in tags`, false))
     }, {
       filters: [
         ...createYearFilters(1996),

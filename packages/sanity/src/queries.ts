@@ -102,7 +102,7 @@ export const getBibliographyList = async (page = 0, filter?: Filter): Promise<Ty
 
   return await runQuery(q(`*[${filterQuery}]`, {isArray: true})
     .filterByType('bibliographyDocument')
-    .order(...(orderCustom ? ['orderCustom asc'] : ['orderDate desc', 'orderCustom asc']))
+    .order(...(orderCustom ? ['orderCustom asc', 'orderDate desc'] : ['orderDate desc', 'orderCustom asc']))
     .grab$(articleListSelection))
 }
 
